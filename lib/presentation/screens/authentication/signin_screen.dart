@@ -63,12 +63,14 @@ class _SignInState extends ConsumerState<SignInScreen> {
   Widget build(BuildContext context) {
    
    return Scaffold(
-      body: PopScope(
-        canPop: false,
-        child: Padding(
-          padding: const EdgeInsets.fromLTRB(10, 50 ,10, 100),
+      body: SafeArea(
+        child: PopScope(
+          canPop: false,
           child: ListView(
             children: <Widget>[
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.05,
+              ),
               const TextIconWidget(size: 65),
               const SizedBox(
                 height: 10,
@@ -218,7 +220,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                                 CustomSnackBarWidget.openSnackBar(context, 'Error', 'Usuario o contraseña incorrectos.'),
                                 if(kDebugMode){
                                   print(onError.toString())
-        
+                  
                                 }
                               });
                             }
@@ -295,7 +297,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                 ),
               ),
             ]
-          )
+          ),
         ),
       )
    );

@@ -20,7 +20,7 @@ url(){
   if(env == 'LOCAL'){
     return 'http://localhost:8089';
   }else{
-    return 'http://52.210.166.74:8080';
+    return 'http://3.254.209.202:8080';
   }
 }
 

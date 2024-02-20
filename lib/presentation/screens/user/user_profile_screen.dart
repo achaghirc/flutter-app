@@ -218,7 +218,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               width: MediaQuery.of(context).size.width * 0.95,
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).buttonTheme.colorScheme?.inversePrimary)
+                  backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).buttonTheme.colorScheme!.secondary)
                 ),
                 onPressed: () {
                   ref.read(sessionProvider.notifier).clear();

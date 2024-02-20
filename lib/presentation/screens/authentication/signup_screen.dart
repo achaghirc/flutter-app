@@ -104,20 +104,18 @@ Future<bool> validateAvailableUserName() async {
     sessionProvider,
     ((previous, next) => {
       if(next.session != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(
-          builder: (context) {
-            return Text('SESSION EXITS');
-          }
-        ))}
+        context.go(next.session!.user.roleCode == 'RRPP' ? '/homeRRPP' : '/home')
+      }
     })
    );
     return Scaffold(
+      appBar: AppBar(),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            const SizedBox(
-              height: 20,
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.01,
             ),
             const TextIconWidget(),           
             Form(
@@ -155,7 +153,7 @@ Future<bool> validateAvailableUserName() async {
                       ),
                       labelText: 'Usuario',
                       labelStyle: GoogleFonts.nunito(
-                        color: Theme.of(context).colorScheme.secondary
+                        color: Theme.of(context).colorScheme.onBackground
                       )
                     ),
                   ),
@@ -204,7 +202,7 @@ Future<bool> validateAvailableUserName() async {
                           ),
                           labelText: 'Correo Electrónico',
                           labelStyle: GoogleFonts.nunito(
-                            color: Theme.of(context).colorScheme.secondary
+                            color: Theme.of(context).colorScheme.onBackground
                           )
                         ),
                         textInputAction: TextInputAction.next,
@@ -247,7 +245,7 @@ Future<bool> validateAvailableUserName() async {
                       ),
                       labelText: 'Contraseña',
                       labelStyle: GoogleFonts.nunito(
-                        color: Theme.of(context).colorScheme.secondary
+                        color: Theme.of(context).colorScheme.onBackground
                       )
                     ),
                   ),
@@ -299,7 +297,7 @@ Future<bool> validateAvailableUserName() async {
                       ),
                       labelText: 'Confirm password',
                       labelStyle: GoogleFonts.nunito(
-                        color: Theme.of(context).colorScheme.secondary
+                        color: Theme.of(context).colorScheme.onBackground
                       )
                     ),
                   ),
@@ -324,7 +322,7 @@ Future<bool> validateAvailableUserName() async {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary
+                          backgroundColor: Theme.of(context).colorScheme.secondary
                         ),
                         icon: const Icon(
                           Icons.arrow_back,
@@ -380,7 +378,7 @@ Future<bool> validateAvailableUserName() async {
                     ElevatedButton(
                       onPressed: (){},
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Theme.of(context).colorScheme.inversePrimary
+                        backgroundColor: Theme.of(context).colorScheme.background
                       ),
                       child: Container(
                         height: 30,
@@ -409,7 +407,7 @@ Future<bool> validateAvailableUserName() async {
                     TextButton(
                       style: ButtonStyle(
                         backgroundColor: MaterialStateProperty.resolveWith((states) => 
-                          Theme.of(context).buttonTheme.colorScheme?.inversePrimary
+                          Theme.of(context).buttonTheme.colorScheme?.secondary
                         )
                       ),
                       child: Text(
@@ -549,7 +547,7 @@ class _SecondSignUpPageState extends ConsumerState<SecondSignUpPage> {
                     ),
                     labelText: 'Nombre',
                     labelStyle: GoogleFonts.nunito(
-                      color: Theme.of(context).colorScheme.secondary
+                      color: Theme.of(context).colorScheme.onBackground
                     )
                   ),
                 ),
@@ -575,7 +573,7 @@ class _SecondSignUpPageState extends ConsumerState<SecondSignUpPage> {
                   ),
                   labelText: 'Apellidos',
                   labelStyle: GoogleFonts.nunito(
-                    color: Theme.of(context).colorScheme.secondary
+                    color: Theme.of(context).colorScheme.onBackground
                   )
                 ),
               ),
@@ -600,7 +598,7 @@ class _SecondSignUpPageState extends ConsumerState<SecondSignUpPage> {
                   ),
                   labelText: 'DNI/NIE/CIF',
                   labelStyle: GoogleFonts.nunito(
-                    color: Theme.of(context).colorScheme.secondary
+                    color: Theme.of(context).colorScheme.onBackground
                   )
                 ),
               ),
@@ -627,7 +625,7 @@ class _SecondSignUpPageState extends ConsumerState<SecondSignUpPage> {
                   ),
                   labelText: 'Teléfono',
                   labelStyle: GoogleFonts.nunito(
-                    color: Theme.of(context).colorScheme.secondary
+                    color: Theme.of(context).colorScheme.onBackground
                   )
                 ),
               ),
@@ -640,7 +638,7 @@ class _SecondSignUpPageState extends ConsumerState<SecondSignUpPage> {
               padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
               child: ElevatedButton(
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.inversePrimary)
+                  backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.secondary)
                 ),
                 child: Text(
                   'Finalizar',
