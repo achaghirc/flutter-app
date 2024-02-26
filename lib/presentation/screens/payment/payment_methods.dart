@@ -51,12 +51,15 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
             builder: (context, AsyncSnapshot snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData){
                 return const CircularProgressIndicator();
-              }
-              // else if(snapshot.data == null) {
-              //   return const Center(
-              //     child: StripePayScreen()
-              //   );
-              // } 
+              } else if(snapshot.data == null) {
+                return const Center(
+                  child: Center(
+                    child: Text(
+                      'No tienes ninguna tarjeta guardada.'
+                    ),
+                  )
+                );
+              } 
               else {
                 PaymentMethodCollection paymentMethodCollection = snapshot.data as PaymentMethodCollection;
                 return ListView.separated(

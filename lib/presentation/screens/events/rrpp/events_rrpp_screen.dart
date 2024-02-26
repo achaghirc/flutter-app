@@ -119,12 +119,12 @@ class _YourRRPPEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(events.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'No hay enventos',
           style: TextStyle(
             fontSize: 15,
-            color: Colors.black
+            color: Theme.of(context).colorScheme.inverseSurface
           ),
         ),
       );
@@ -165,12 +165,12 @@ class _RestOfEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(events.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'No hay enventos',
           style: TextStyle(
             fontSize: 15,
-            color: Colors.black
+            color: Theme.of(context).colorScheme.inverseSurface
           ),
         ),
       );

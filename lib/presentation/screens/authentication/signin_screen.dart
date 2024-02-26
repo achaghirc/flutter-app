@@ -37,7 +37,6 @@ class _SignInState extends ConsumerState<SignInScreen> {
     await secureStorage.write(key: "session", value: jsonEncode(session.toJson()));
   }
 
-
   Future<JwtAuthenticationResponseDTO> submitLogin() async {
     setState(() {
       isLoading = true;

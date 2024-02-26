@@ -10,6 +10,7 @@ import 'package:my_app/infraestructure/repositories/queryFilters/search_tickets_
 import 'package:my_app/infraestructure/repositories/tickets_type_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/shared/form/form_layout.dart';
+import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/snackBar/custom_snackbar_widget.dart';
 
 const List<String> list2 = <String>[ "Entrada simple","Entrada + Consumición","Entrada + Bonocopa","Bonocopa 2x10","Bonocopa 3x15"];
@@ -93,19 +94,7 @@ class _FormCreateTicketState extends ConsumerState<FormCreateTicket> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Outnow',
-                  style: GoogleFonts.nunito(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w800
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+            const TextIconWidget(size: 45),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,0,0,0),
               child: Row(
@@ -350,7 +339,7 @@ class _FormCreateTicketState extends ConsumerState<FormCreateTicket> {
                     padding: const EdgeInsets.fromLTRB(0,15,0,0),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.inversePrimary),
+                        backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.secondary),
                       ),
                       onPressed: (){
                         createTicket().then((value) {

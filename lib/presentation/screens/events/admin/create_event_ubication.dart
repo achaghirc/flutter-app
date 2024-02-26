@@ -8,6 +8,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/infraestructure/repositories/event_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/shared/form/form_layout.dart';
+import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/snackBar/custom_snackbar_widget.dart';
 
@@ -87,22 +88,10 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.all(10),
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Outnow',
-                  style: GoogleFonts.nunito(
-                    fontSize: 55,
-                    fontWeight: FontWeight.w800
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+            const TextIconWidget(),
             Padding(
               padding: const EdgeInsets.fromLTRB(10,0,0,0),
               child: Row(
@@ -111,8 +100,8 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                   Text(
                     'Especifica la ubicación',
                     style: GoogleFonts.nunito(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600
+                      fontSize: 15,
+                      fontWeight: FontWeight.w700
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -125,7 +114,7 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
               child: FormLayout(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -147,14 +136,17 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Tipo Vía',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -178,14 +170,17 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Nombre de la Vía',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -194,7 +189,7 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
                       children: [
                         Flexible(
@@ -213,14 +208,17 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Localidad',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -246,14 +244,17 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Número',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -262,7 +263,7 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: _provinceController,
                       onChanged: (val) {
@@ -278,20 +279,23 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Provincia',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: _countryController,
                       onChanged: (val) {
@@ -307,20 +311,23 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'País',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     child: TextFormField(
                       controller: _postalCodeController,
                       onChanged: (val) {
@@ -336,20 +343,23 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Código postal',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                    Container(
-                    padding: const EdgeInsets.all(10),
+                    padding: const EdgeInsets.all(8),
                     height: MediaQuery.of(context).size.height * 0.2,
                     child: Column(
                       children: [
@@ -375,20 +385,23 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                             minLines: 3,
                             maxLines: null,
                             maxLength: 80,
+                            textInputAction: TextInputAction.done,
                             //expands: true,
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Descripción',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               ),
-                              
                             ),
                           ),
                         ),
@@ -396,13 +409,13 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * .07,
-                    padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    height: MediaQuery.of(context).size.height * 0.07,
+                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: SizedBox(
                       width: MediaQuery.of(context).size.width * .5,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
                         ),
                         onPressed: (){
                            if(_fbKey.currentState!.validate()){

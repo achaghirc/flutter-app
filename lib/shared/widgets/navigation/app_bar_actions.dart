@@ -16,8 +16,7 @@ class AppBarActions extends StatelessWidget {
               }, 
               icon: Icon(
                 Icons.account_circle_outlined,
-                size: 30,
-                color: Theme.of(context).colorScheme.secondary,
+                size: 30
               )
             ),
           ),

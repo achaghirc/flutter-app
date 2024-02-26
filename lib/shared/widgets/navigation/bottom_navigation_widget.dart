@@ -25,8 +25,13 @@ class _BottomNavigationBarWidgetState extends ConsumerState<BottomNavigationBarW
 
     if(session == null){
       context.go('/signin');
-      sessionProvider.createElement();
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
 

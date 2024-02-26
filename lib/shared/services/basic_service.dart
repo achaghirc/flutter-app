@@ -76,6 +76,24 @@ class BasicService {
     }
   }
 
+  patchCall(String url, String path, 
+    {Map<String,String>? headers, 
+    dynamic body,
+    Map<String, dynamic>? queryParameters}) async {
+    
+    Response res = await patch(
+      Uri.parse(url + path).replace(queryParameters: queryParameters),
+      headers: headers ?? this.headers,
+      body: body
+    );
+    
+    if(res.statusCode == 200) {
+      return res;
+    }else {
+      _manageErrors(res);
+    }
+  }
+
   postCall(String url, String path, 
     {Map<String,String>? headers, 
     dynamic body,

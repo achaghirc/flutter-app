@@ -12,11 +12,9 @@ import 'package:my_app/shared/widgets/bottomSheet/bottom_sheet_widget.dart';
 import 'package:my_app/shared/widgets/custom_painter/wave_custom_painter.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/navigation/bottom_navigation_widget.dart';
-import 'package:my_app/shared/widgets/shimmed/shimmed_data_resume_widget.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_rrpps_list.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_user_event_info.dart';
 import 'package:my_app/shared/widgets/tickets/data_resume_widget.dart';
-import 'package:shimmer/shimmer.dart';
 
 class PublicRelationZone extends ConsumerStatefulWidget {
   const PublicRelationZone({super.key});
@@ -54,7 +52,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         scrolledUnderElevation: 0.0,
           actions: const [
             AppBarActions()

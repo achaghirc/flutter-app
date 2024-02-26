@@ -25,12 +25,12 @@ class PersonDTO {
   });
 
       factory PersonDTO.fromJson(Map<String, dynamic> json) => PersonDTO(
-        id: json["id"],
-        lastName: json["lastName"],
-        name: json["name"],
-        email: json["email"],
-        dni: json["dni"],
-        phoneNumber: json["phoneNumber"],
+        id: json["id"] ?? 0,
+        lastName: json["lastName"]?? '',
+        name: json["name"] ?? '',
+        email: json["email"] ?? '',
+        dni: json["dni"] ?? '',
+        phoneNumber: json["phoneNumber"] ?? 000000000,
     );
 
     Map<String, dynamic> toJson() => {

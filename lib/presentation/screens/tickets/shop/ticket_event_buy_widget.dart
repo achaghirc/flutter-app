@@ -142,9 +142,9 @@ class _TicketEventBuyWidgetState extends State<TicketEventBuyWidget> {
           child: ElevatedButton(
             style: ButtonStyle(
               backgroundColor: MaterialStateProperty.resolveWith((states) => counter > 0 ? 
-              Theme.of(context).colorScheme.inversePrimary
+              Theme.of(context).colorScheme.secondary
               :
-              Theme.of(context).colorScheme.secondary),
+              Colors.grey),
             ),
             onPressed: (){
               if(counter > 0){

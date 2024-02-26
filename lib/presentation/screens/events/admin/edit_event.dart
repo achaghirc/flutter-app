@@ -11,6 +11,7 @@ import 'package:my_app/infraestructure/repositories/event_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/screens/events/admin/edit_event_ubication.dart';
 import 'package:my_app/shared/form/form_layout.dart';
+import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 
 
@@ -95,31 +96,13 @@ class _EditEventState extends ConsumerState<EditEvent> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Outnow',
-                  style: GoogleFonts.nunito(
-                    fontSize: 55,
-                    fontWeight: FontWeight.w800
-                  ),
-                  textAlign: TextAlign.start,
-                ),
+                const TextIconWidget(size: 55),
                 Container(
                   margin: EdgeInsets.fromLTRB(0, 0, MediaQuery.of(context).size.width * 0.03, 0),
-                  // decoration: BoxDecoration(
-                  //   border: Border.all(color: Theme.of(context).buttonTheme.colorScheme?.inversePrimary ?? Colors.grey, style: BorderStyle.solid),
-                  //   color: Theme.of(context).buttonTheme.colorScheme?.inversePrimary ?? Colors.grey,
-                  //   borderRadius: const BorderRadius.all(Radius.circular(10)),
-                  //   shape: BoxShape.rectangle,
-                  // ),
                   child: Row(
                     children: [
                       IconButton(
-                        // style: ButtonStyle(
-                        //   backgroundColor: MaterialStateProperty.resolveWith((states) => 
-                        //     Theme.of(context).buttonTheme.colorScheme?.inversePrimary ?? Colors.grey
-                        //   ),
-                        // ),
-                        iconSize: 35.0,
+                        iconSize: 30.0,
                         onPressed: () {
                           Navigator.push(context,
                             MaterialPageRoute(
@@ -174,12 +157,15 @@ class _EditEventState extends ConsumerState<EditEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
                         suffixIcon: const Icon(Icons.edit_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Nombre',
                         labelStyle: GoogleFonts.nunito(
                           color: Theme.of(context).colorScheme.secondary
@@ -198,6 +184,7 @@ class _EditEventState extends ConsumerState<EditEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -205,7 +192,9 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         hintStyle: const TextStyle(color: Colors.black45),
                         errorStyle:const TextStyle(color: Colors.redAccent),
                         suffixIcon:const Icon(Icons.event_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Fecha de Inicio',
                         labelStyle: GoogleFonts.nunito(
                           color: Theme.of(context).colorScheme.secondary
@@ -232,6 +221,7 @@ class _EditEventState extends ConsumerState<EditEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -239,7 +229,9 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         hintStyle: const TextStyle(color: Colors.black45),
                         errorStyle:const TextStyle(color: Colors.redAccent),
                         suffixIcon:const Icon(Icons.event_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Fecha de Fin',
                         labelStyle: GoogleFonts.nunito(
                           color: Theme.of(context).colorScheme.secondary
@@ -264,13 +256,16 @@ class _EditEventState extends ConsumerState<EditEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
                         hintStyle: const TextStyle(color: Colors.black45),
                         errorStyle: const TextStyle(color: Colors.redAccent),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         suffixIcon: const Icon(Icons.schedule_outlined),
                         labelText: 'Hora límite',
                         labelStyle: GoogleFonts.nunito(
@@ -310,11 +305,14 @@ class _EditEventState extends ConsumerState<EditEvent> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Descripción',
                               labelStyle: GoogleFonts.nunito(
                                 color: Theme.of(context).colorScheme.secondary

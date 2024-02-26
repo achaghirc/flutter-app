@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 final container = ProviderContainer();
 //OPTIONS: LOCAL ; DEMO
-const env = 'DEMO'; //LOCAL
+const env = 'LOCAL'; //LOCAL
 const stripePublishableKey = "pk_test_51OfqoCDpDIFEod0t6usPrGrqahmMtmtUwtzYufKMY0k0j4lvjUXYgciwN3XiAaHl6xu4xfTKPAlOkIsoAxRKliKj00STRhV2P6";
 RegExp regex = RegExp(r'([.]*0)(?!.*\d)');
 

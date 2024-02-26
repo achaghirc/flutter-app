@@ -144,7 +144,7 @@ class _RowChips extends StatelessWidget {
       children: <Widget>[
         publicRelationCode != 'ADMIN' ?
         Chip(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           label: Text(
@@ -157,7 +157,7 @@ class _RowChips extends StatelessWidget {
           ),
         ) : const SizedBox(),
         Chip(
-          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+          backgroundColor: Theme.of(context).colorScheme.secondary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           label: Text(
@@ -528,7 +528,7 @@ class _EventManagementAdmin extends StatelessWidget {
                         'ELIMINAR',
                         style: GoogleFonts.nunito(
                           fontSize: 20,
-                          color: Theme.of(context).colorScheme.onSurface,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold
                         ),
                     )
@@ -605,7 +605,7 @@ class _EventPublicRelationResumeDataState extends State<_EventPublicRelationResu
                         title: 'VENDIDAS', 
                         value: data.amountSold, 
                         icon: Icons.local_activity_outlined, 
-                        iconColor: Theme.of(context).colorScheme.inversePrimary,
+                        iconColor: Theme.of(context).colorScheme.secondary,
                         color: Theme.of(context).colorScheme.onBackground
                       ),
                       const SizedBox(width: 5),
@@ -613,7 +613,7 @@ class _EventPublicRelationResumeDataState extends State<_EventPublicRelationResu
                         title: 'COMISION', 
                         value: '${data.profit}€', 
                         icon: Icons.local_activity_outlined,
-                        iconColor: Theme.of(context).colorScheme.inversePrimary,
+                        iconColor: Theme.of(context).colorScheme.secondary,
                         color: Theme.of(context).colorScheme.onBackground
                       ),
                       const SizedBox(width: 5),
@@ -621,7 +621,7 @@ class _EventPublicRelationResumeDataState extends State<_EventPublicRelationResu
                         title: 'INGRESOS', 
                         value: '${data.totalIncome}€', 
                         icon: Icons.euro_outlined,
-                        iconColor: Theme.of(context).colorScheme.inversePrimary,
+                        iconColor: Theme.of(context).colorScheme.secondary,
                         color: Theme.of(context).colorScheme.onBackground
                       )
                     ],

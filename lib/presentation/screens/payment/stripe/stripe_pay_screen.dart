@@ -12,6 +12,7 @@ import 'package:my_app/infraestructure/repositories/stripe/stripe_repository_imp
 import 'package:my_app/infraestructure/repositories/tickets_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/providers/theme_provider.dart';
+import 'package:my_app/shared/widgets/custom/gradient_text.dart';
 
 class StripePayScreen extends ConsumerStatefulWidget {
   final List<TicketsDTO> tickets;
@@ -133,28 +134,32 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
           ),
         ),
       ),
-      body: Column(
+      body: ListView(
         children: [
           SizedBox(height: MediaQuery.of(context).size.height * 0.10),
-          Text(
-            'Vas a pagar',
-            style: GoogleFonts.nunito(
-              fontSize: 30,
-              fontWeight: FontWeight.bold
+          Center(
+            child: Text(
+              'Vas a pagar',
+              style: GoogleFonts.nunito(
+                fontSize: 30,
+                fontWeight: FontWeight.bold
+              ),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.06),
-          GradientText(
-            '$_totalAmount €',
-            gradient: const LinearGradient(colors: [
-              Color.fromRGBO(86,204,255, 100),
-              Color.fromRGBO(113,228,201, 100),
-              Color.fromRGBO(143,255,140, 100),
-            ]),
-            style: GoogleFonts.nunito(
-              fontSize: 65,
-              fontWeight: FontWeight.bold,
-              color: Colors.greenAccent
+          Center(
+            child: GradientText(
+              '$_totalAmount €',
+              gradient: const LinearGradient(colors: [
+                Color.fromRGBO(86,204,255, 100),
+                Color.fromRGBO(113,228,201, 100),
+                Color.fromRGBO(143,255,140, 100),
+              ]),
+              style: GoogleFonts.nunito(
+                fontSize: 65,
+                fontWeight: FontWeight.bold,
+                color: Colors.greenAccent
+              ),
             ),
           ),
           SizedBox(height: MediaQuery.of(context).size.height * 0.05),
@@ -256,29 +261,6 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class GradientText extends StatelessWidget {
-  const GradientText(
-    this.text, {
-    required this.gradient,
-    this.style,
-  });
-
-  final String text;
-  final TextStyle? style;
-  final Gradient gradient;
-
-  @override
-  Widget build(BuildContext context) {
-    return ShaderMask(
-      blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => gradient.createShader(
-        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-      ),
-      child: Text(text, style: style),
     );
   }
 }
