@@ -1,4 +1,5 @@
 import 'package:my_app/infraestructure/models/squad/organizer_squad_dto.dart';
+import 'package:my_app/infraestructure/models/squad/public_relation_squad_dto.dart';
 
 abstract class OrganizerSquadRepository {
 
@@ -8,6 +9,6 @@ abstract class OrganizerSquadRepository {
 
    Future<List<OrganizerSquadDTO>> deleteUserFromSquad(int userId, int organizerId);
    
-   Future<List<OrganizerSquadDTO>> getSquads();
+   Future<List<PublicRelationSquadDTO>> getSquads();
 
 }

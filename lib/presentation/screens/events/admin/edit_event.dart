@@ -61,8 +61,52 @@ class _EditEventState extends ConsumerState<EditEvent> {
     _descriptionController.value = TextEditingValue(text: _event.description);
   }
 
+  void buildDateFromPickers(String paramDate) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(), 
+      lastDate: DateTime(2030)
+    );
+    if (pickedDate == null) return Future.error('Error on date select');
+    if (!context.mounted) return;
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context, 
+      initialTime: TimeOfDay.fromDateTime(pickedDate)
+    );
+    if(selectedTime != null){
+      DateTime date = DateTime(
+        pickedDate.year, pickedDate.month, pickedDate.day, selectedTime.hour, selectedTime.minute
+      );
+      setState(() {
+        if(paramDate == 'START'){
+          startDate = date;
+        }else{
+          endDate = date;
+        }
+      });
+    }
+  }
+  void buildDateTimePicker(DateTime paramDate) async {
+    if (!context.mounted) return;
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context, 
+      initialTime: TimeOfDay.fromDateTime(startDate)
+    );
+    if(selectedTime != null){
+      DateTime date = DateTime(
+        DateTime.now().year, DateTime.now().month, startDate.day, selectedTime.hour, selectedTime.minute
+      );
+      if(date.isBefore(startDate)){
+        date = date.add(const Duration(days: 1));
+      }
+      setState(() {
+        paramDate = date;
+      });
+    }
+  }
+
   Future<EventDTO> editAndSaveEvent() async{
-    
     try{
       setState(() {
         isLoading = true;
@@ -76,8 +120,6 @@ class _EditEventState extends ConsumerState<EditEvent> {
     }on Error {
       throw ErrorDescription("Error updating event");
     }
-
-    
   }
 
 
@@ -168,19 +210,17 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         ),
                         labelText: 'Nombre',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (DateTime val) {
-                        _event.startDate = "${Moment(val).format("YYYY-MM-DDTHH:mm:ss")}Z";
-                      },
-                      initialValue: startDate,
+                    child: TextFormField(
+                      initialValue: DateFormat("dd/MM/yyyy HH:mm").format(startDate),
+                      readOnly: true,
+                      onTap: () => buildDateFromPickers('START'),
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
@@ -197,23 +237,22 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         ),
                         labelText: 'Fecha de Inicio',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
-                  ),
+                  ),                
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (val) {
-                        _event.endDate = "${Moment(val).format("YYYY-MM-DDTHH:mm:ss")}Z";
+                    child: TextFormField(
+                      initialValue: DateFormat("dd/MM/yyyy HH:mm").format(endDate),
+                      readOnly: true,
+                      onTap: () => buildDateFromPickers('END'),
+                      onChanged: (val) {
+                        _fbKey.currentState!.validate();
                       },
-                      initialValue: endDate,
-                      mode: DateTimeFieldPickerMode.dateAndTime,
-                      autovalidateMode: AutovalidateMode.always,
                       validator: (e) {
-                        if(e!= null && e.isBefore(startDate)){
+                        if(e!= null && endDate.isBefore(startDate)){
                           return 'Fecha fin debe ser posterior a fecha inicio.';
                         }
                         return null;
@@ -234,25 +273,21 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         ),
                         labelText: 'Fecha de Fin',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (val) {
-                        _event.limitHour = "${Moment(val).format("YYYY-MM-DDTHH:mm:ss")}Z";
-                      },
-                      autovalidateMode: AutovalidateMode.always,
-                      validator: (DateTime? e) {
-                        return (e?.millisecond ?? 0) < startDate.millisecond
+                    child: TextFormField(
+                      initialValue: DateFormat("HH:mm").format(limitHour),
+                      onTap: () => buildDateTimePicker(limitHour),
+                      validator: (e) {
+                        return e != null && limitHour.millisecond < startDate.millisecond 
                             ? 'Debe ser posterior a fecha inicio'
                             : null;
                       },
-                      initialValue: limitHour,
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
@@ -262,14 +297,14 @@ class _EditEventState extends ConsumerState<EditEvent> {
                           )
                         ),
                         hintStyle: const TextStyle(color: Colors.black45),
-                        errorStyle: const TextStyle(color: Colors.redAccent),
+                        errorStyle:const TextStyle(color: Colors.redAccent),
+                        suffixIcon:const Icon(Icons.event_note_outlined),
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        suffixIcon: const Icon(Icons.schedule_outlined),
-                        labelText: 'Hora límite',
+                        labelText: 'Hora Límite',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -315,7 +350,7 @@ class _EditEventState extends ConsumerState<EditEvent> {
                               ),
                               labelText: 'Descripción',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               ),
                               
                             ),
@@ -331,7 +366,7 @@ class _EditEventState extends ConsumerState<EditEvent> {
                       width: MediaQuery.of(context).size.width * .5,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
                         ),
                         onPressed: (){
                            if(_fbKey.currentState!.validate()){

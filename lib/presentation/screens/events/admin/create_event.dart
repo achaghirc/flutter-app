@@ -203,8 +203,7 @@ class _CreateEventState extends State<CreateEvent> {
                         )
                       ),
                     ),
-                  ),
-                  
+                  ),                  
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -265,6 +264,7 @@ class _CreateEventState extends State<CreateEvent> {
                             minLines: 3,
                             maxLines: null,
                             maxLength: 80,
+                            textInputAction: TextInputAction.done,
                             //expands: true,
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
@@ -281,7 +281,6 @@ class _CreateEventState extends State<CreateEvent> {
                               labelStyle: GoogleFonts.nunito(
                                 color: Theme.of(context).colorScheme.onBackground
                               ),
-                              
                             ),
                           ),
                         ),
@@ -292,10 +291,10 @@ class _CreateEventState extends State<CreateEvent> {
                     height: MediaQuery.of(context).size.height * .07,
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * .5,
+                      width: MediaQuery.of(context).size.width * .8,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
                         ),
                         onPressed: (){
                            if(_fbKey.currentState!.validate()){
@@ -325,7 +324,8 @@ class _CreateEventState extends State<CreateEvent> {
                               'CONTINUAR',
                               style: GoogleFonts.nunito(
                                 fontSize: 18,
-                                color: Theme.of(context).colorScheme.background,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700
                               ),
                           )
                         ),

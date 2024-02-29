@@ -32,6 +32,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
     if(ref.read(sessionProvider).session == null){
       context.pushReplacementNamed('signin');
     }
+    session = ref.read(sessionProvider).session!;
   }
 
 
@@ -43,11 +44,12 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
 
   Future deleteSessionUser() async{
     await secureStorage.delete(key: 'session');
+    ref.read(sessionProvider.notifier).clear();
   }
   
   @override
   Widget build(BuildContext context) {
-    session = ref.watch(sessionProvider).session!;
+    //final sessionWatch = ref.read(sessionProvider).session != null ? ref.watch(sessionProvider).session! : JwtAuthenticationResponseDTO.fromJson({});
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -80,7 +82,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
            )
         ],
       ),
-      body: ListView(
+      body: Column(
         children: [
           CircleAvatar(
             radius: 52,
@@ -225,26 +227,18 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               ]
             ),
           ),
-          const Divider(
-            color: Colors.black12,
-            endIndent: 20.0,
-            indent: 20.0,
-            height: 2,
-          ),
           const SizedBox(
             height: 10,
           ),
           SizedBox(
             height: 50,
-            width: MediaQuery.of(context).size.width * 0.95,
+            width: MediaQuery.of(context).size.width * .8,
             child: ElevatedButton(
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).buttonTheme.colorScheme!.secondary)
               ),
               onPressed: () {
-                deleteSessionUser();
-                ref.read(sessionProvider).clear();
-                context.pushReplacementNamed('signin');
+                deleteSessionUser().then((value) => context.pushReplacementNamed('signin'));
               }, 
               child: Text(
                 'Cerrar Session',
@@ -271,7 +265,7 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
               Text(
                 'Información Legal',
                 style: GoogleFonts.nunito(),
-                ),
+              ),
             ],
           ),
         ]

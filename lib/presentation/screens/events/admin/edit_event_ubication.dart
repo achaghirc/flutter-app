@@ -107,10 +107,11 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               // do other stuff with _category
                               setState(() => _event.ubicationTypeRoad = newValue ?? list.first);
                             },
-                            value: list.first,
+                            value: _event.ubicationTypeRoad,
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
@@ -120,7 +121,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               ),
                               labelText: 'Tipo Vía',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -143,6 +144,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
@@ -152,7 +154,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               ),
                               labelText: 'Nombre de la Vía',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -179,6 +181,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
@@ -188,7 +191,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               ),
                               labelText: 'Localidad',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -213,6 +216,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
@@ -222,7 +226,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               ),
                               labelText: 'Número',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               )
                             ),
                           ),
@@ -246,6 +250,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -255,7 +260,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                         ),
                         labelText: 'Provincia',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -276,6 +281,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -285,7 +291,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                         ),
                         labelText: 'País',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -306,6 +312,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -315,7 +322,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                         ),
                         labelText: 'Código postal',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -347,6 +354,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
@@ -356,7 +364,7 @@ class _EditEventUbicationState extends ConsumerState<EditEventUbication> {
                               ),
                               labelText: 'Descripción',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               ),
                               
                             ),

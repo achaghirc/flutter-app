@@ -50,14 +50,12 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
             future: getUserCards(), 
             builder: (context, AsyncSnapshot snapshot) {
               if(snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData){
-                return const CircularProgressIndicator();
+                return const Center(child: CircularProgressIndicator());
               } else if(snapshot.data == null) {
                 return const Center(
-                  child: Center(
-                    child: Text(
-                      'No tienes ninguna tarjeta guardada.'
-                    ),
-                  )
+                  child: Text(
+                    'No tienes ninguna tarjeta guardada.'
+                  ),
                 );
               } 
               else {

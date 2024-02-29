@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -24,14 +25,19 @@ class EventScreenState extends ConsumerState<EventsScreen> {
   late JwtAuthenticationResponseDTO? session;
   TextEditingController searchController = TextEditingController();
   late String searchString = '';
+  
   Future<List<EventDTO>> getEvents() async{
-    List<EventDTO> events = []; 
+    if(mounted && session != null){
+      List<EventDTO> events = []; 
       if(session!.user.roleCode == 'USER'){
         events = await EventRepositoryImpl(session).getAllEventsAvailable();
       }else{ 
         events = await EventRepositoryImpl(session).getAllEventsOrganizer(session!.user.organizerId.first.toString());
       }
-    return events;
+      return events;
+    }else{
+      return List.empty();
+    }
   }
 
   
@@ -46,7 +52,7 @@ class EventScreenState extends ConsumerState<EventsScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
+
     super.dispose();
   }
 
@@ -56,21 +62,28 @@ class EventScreenState extends ConsumerState<EventsScreen> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
-        title: Padding(
-          padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
-          child: SearchWidget(
-              searchController: searchController, 
-              placeholder: 'Buscar eventos', 
-              onChanged: (value) {
-                if(value.length > 2 ){
-                  setState(() {
-                    searchString = value;                           
-                  });
-                }
-              },
-              onTap: () {
-              },
-          ),
+        leading: const Icon(
+          Icons.search_outlined
+        ),
+        title: FadeIn(
+          animate: true,
+          duration: const Duration(milliseconds: 350),
+          child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0,0,0,0),
+              child: SearchWidget(
+                  searchController: searchController, 
+                  placeholder: 'Buscar eventos', 
+                  onChanged: (value) {
+                    if(value.length > 2 ){
+                      setState(() {
+                        searchString = value;                           
+                      });
+                    }
+                  },
+                  onTap: () {
+                  },
+              ),
+            ),
         ),
         titleSpacing: 3,
         actions: const [
@@ -89,7 +102,7 @@ class EventScreenState extends ConsumerState<EventsScreen> {
                       return const ShimmedEvents();
                     } else if(snapshot.data == null){
                       return Center(
-                          child: Text(session!.user.roleCode == 'ADMIN' ? 'No tienes ningún evento aún, crea el primero' : 'No hay eventos disponibles'),
+                          child: Text(session != null && session!.user.roleCode == 'ADMIN' ? 'No tienes ningún evento aún, crea el primero' : 'No hay eventos disponibles'),
                         ); 
                     }else {
                       List<EventDTO> data = snapshot.data as List<EventDTO>;
@@ -132,7 +145,7 @@ class EventScreenState extends ConsumerState<EventsScreen> {
               ),
             ]
           ),
-          (session!.user.roleCode == 'ADMIN') ?
+          (session != null && session!.user.roleCode == 'ADMIN') ?
             Positioned(
               bottom: MediaQuery.of(context).size.height * 0.03,
               right: MediaQuery.of(context).size.width * 0.03,

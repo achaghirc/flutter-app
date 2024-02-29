@@ -123,6 +123,9 @@ class _SquadManagementScreenState extends ConsumerState<SquadManagementScreen> {
     return Scaffold(
       appBar: AppBar(
         scrolledUnderElevation: 0.0,
+        leading: const Icon(
+          Icons.search_outlined
+        ),
         title: Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 0.0, 0.0, 0.0),
           child: SearchWidget(
@@ -145,8 +148,31 @@ class _SquadManagementScreenState extends ConsumerState<SquadManagementScreen> {
           ),
         ),
         titleSpacing: 1,
-        actions: const [
-          AppBarActions()
+        actions: [
+          IconButton(
+            onPressed: (){
+              final session = ref.read(sessionProvider).session!;
+                showSearch<List<OrganizerSquadDTO>?>(
+                  context: context,
+                  delegate: SearchUserDelegate(
+                    searchUsers: UserRepositoryImpl(session).getUsersByUsernamePageable,
+                    addUserToSquad: OrganizerSquadRepositoryImpl(session).addUserToSquad,
+                    session: session,
+                    actualSquad: squadList.map((e) => e.userId).toList(),
+                  )
+                ).then((organizerSquad) {
+                  if(organizerSquad == null) return null;
+                  if(organizerSquad.isEmpty) return null;
+                  setState(() {
+                    squadList = organizerSquad;
+                  });
+                });
+            },
+            icon: const Icon(
+              Icons.person_add_alt
+            ),
+          ),
+          const AppBarActions()
         ],
       ),
       body: 
@@ -234,37 +260,39 @@ class _SquadManagementScreenState extends ConsumerState<SquadManagementScreen> {
               ),
             ],
           ),
-          Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
-            child: TextButton(
-              style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondary
-              ),
-              onPressed: (){
-                final session = ref.read(sessionProvider).session!;
-                showSearch<List<OrganizerSquadDTO>?>(
-                  context: context,
-                  delegate: SearchUserDelegate(
-                    searchUsers: UserRepositoryImpl(session).getUsersByUsernamePageable,
-                    addUserToSquad: OrganizerSquadRepositoryImpl(session).addUserToSquad,
-                    session: session,
-                    actualSquad: squadList.map((e) => e.userId).toList(),
-                  )
-                ).then((organizerSquad) {
-                  if(organizerSquad == null) return null;
-                  if(organizerSquad.isEmpty) return null;
-                  setState(() {
-                    squadList = organizerSquad;
-                  });
-                });
-              }, 
-              child: Icon(
-                Icons.person_add_alt,
-                color: Theme.of(context).colorScheme.background,
-                )
-              ),
-            )
+          // Positioned(
+          //   bottom: MediaQuery.of(context).size.height * 0.03,
+          //   right: MediaQuery.of(context).size.width * 0.03,
+          //   child: TextButton(
+          //     style: TextButton.styleFrom(
+          //       shape: const CircleBorder(),
+          //       padding: const EdgeInsets.all(15),
+          //       backgroundColor: Theme.of(context).colorScheme.secondary
+          //     ),
+          //     onPressed: (){
+          //       final session = ref.read(sessionProvider).session!;
+          //       showSearch<List<OrganizerSquadDTO>?>(
+          //         context: context,
+          //         delegate: SearchUserDelegate(
+          //           searchUsers: UserRepositoryImpl(session).getUsersByUsernamePageable,
+          //           addUserToSquad: OrganizerSquadRepositoryImpl(session).addUserToSquad,
+          //           session: session,
+          //           actualSquad: squadList.map((e) => e.userId).toList(),
+          //         )
+          //       ).then((organizerSquad) {
+          //         if(organizerSquad == null) return null;
+          //         if(organizerSquad.isEmpty) return null;
+          //         setState(() {
+          //           squadList = organizerSquad;
+          //         });
+          //       });
+          //     }, 
+          //     child: Icon(
+          //       Icons.person_add_alt,
+          //       color: Theme.of(context).colorScheme.background,
+          //       )
+          //     ),
+          //   )
         ]
       ),
       bottomNavigationBar: const BottomNavigationBarWidget(),

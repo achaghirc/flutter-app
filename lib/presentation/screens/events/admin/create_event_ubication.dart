@@ -91,16 +91,16 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: ListView(
           children: <Widget>[
-            const TextIconWidget(),
+            const TextIconWidget(size: 55,),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10,0,0,0),
+              padding: const EdgeInsets.fromLTRB(0,0,0,8),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Especifica la ubicación',
+                    'Cuéntanos donde será la ubicación del evento.',
                     style: GoogleFonts.nunito(
-                      fontSize: 15,
+                      fontSize: 12,
                       fontWeight: FontWeight.w700
                     ),
                     textAlign: TextAlign.center,
@@ -129,7 +129,6 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                               );
                             }).toList(),
                             onChanged: (newValue) {
-                              // do other stuff with _category
                               setState(() => typeRoad = newValue ?? list.first);
                             },
                             value: list.first,
@@ -359,7 +358,7 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                     ),
                   ),
                    Container(
-                    padding: const EdgeInsets.all(8),
+                    padding: const EdgeInsets.fromLTRB(8,0,8,0),
                     height: MediaQuery.of(context).size.height * 0.2,
                     child: Column(
                       children: [
@@ -408,11 +407,10 @@ class _CreateEventUbicationState extends ConsumerState<CreateEventUbication> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.07,
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * 0.06,
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * .5,
+                      width: MediaQuery.of(context).size.width * .8,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Theme.of(context).colorScheme.secondary,

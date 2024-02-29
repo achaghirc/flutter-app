@@ -46,7 +46,7 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
   
 
   void totalAmount(){
-    _ticketComission = calculatePlatformCommission();
+    _ticketComission = calculateRRPPTicketsComission();
     _platformComission = calculatePlatformCommission();
     _totalAmount = _tickets.map((e) => e.price).reduce((a, b) => a+b) + _ticketComission + _platformComission;
     _ticketsAmount = _totalAmount - _ticketComission - _platformComission;
