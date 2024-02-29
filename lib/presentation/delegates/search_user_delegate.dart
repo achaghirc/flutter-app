@@ -106,9 +106,11 @@ class SearchUserDelegate extends SearchDelegate<List<OrganizerSquadDTO>?> {
 
   @override
   Widget buildSuggestions(BuildContext context) {    
-    return const Center(
+    return Center(
       child: Text(
-        'Type and search for a new RRPP'
+        'Escribe un nombre y busca, o dale a la lupa y haz una búsqueda general',
+        style: GoogleFonts.nunito(),
+        textAlign: TextAlign.center,
       ),
     );
     // return FutureBuilder(

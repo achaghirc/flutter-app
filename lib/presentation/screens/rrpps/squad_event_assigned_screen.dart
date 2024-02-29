@@ -9,7 +9,6 @@ import 'package:my_app/presentation/delegates/search_public_relations.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/providers/events/event_pub_rel_repository_provider.dart';
 import 'package:my_app/presentation/providers/users/user_repository_provider.dart';
-import 'package:my_app/presentation/screens/events/admin/events_screen_details.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/search/search_widget.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_rrpp.dart';
@@ -171,7 +170,7 @@ class _SquadEventAssignedStateScreen extends ConsumerState<SquadEventAssignedScr
                       }
                       if(data.isEmpty && searchString == ''){
                         return const Center(
-                          child: Text('Add your first public relations!'),
+                          child: Text('Empieza a añadir relaciones públicas para el evento.'),
                         );
                       }else {
                         searchActivePublicRelationsForEvent();

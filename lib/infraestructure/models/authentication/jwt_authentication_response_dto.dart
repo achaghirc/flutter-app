@@ -23,7 +23,7 @@ class JwtAuthenticationResponseDTO {
 
 
   factory JwtAuthenticationResponseDTO.fromJson(Map<String, dynamic> json) => JwtAuthenticationResponseDTO(
-      status: json["status"],
+      status: json["status"] ?? 'Default',
       token: json["token"] ?? '',
       user: UserInfoDTO.fromJson(json["user"]),
   );

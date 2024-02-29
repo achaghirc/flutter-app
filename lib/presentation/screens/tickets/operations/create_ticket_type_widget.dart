@@ -7,6 +7,7 @@ import 'package:my_app/infraestructure/models/tickets/type/tickets_type_dto.dart
 import 'package:my_app/infraestructure/repositories/tickets_type_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/shared/form/form_layout.dart';
+import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/snackBar/custom_snackbar_widget.dart';
 
 class FormCreateTicketType extends ConsumerStatefulWidget {
@@ -66,19 +67,7 @@ class _FormCreateTicketTypeState extends ConsumerState<FormCreateTicketType> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Outnow',
-                  style: GoogleFonts.nunito(
-                    fontSize: 35,
-                    fontWeight: FontWeight.w800
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
+            const TextIconWidget(size: 45),
             Padding(
               padding: const EdgeInsets.fromLTRB(20,0,0,0),
               child: Row(
@@ -132,7 +121,7 @@ class _FormCreateTicketTypeState extends ConsumerState<FormCreateTicketType> {
                         ),
                         labelText: 'Nombre',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -166,7 +155,7 @@ class _FormCreateTicketTypeState extends ConsumerState<FormCreateTicketType> {
                         ),
                         labelText: 'Description',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
@@ -177,7 +166,7 @@ class _FormCreateTicketTypeState extends ConsumerState<FormCreateTicketType> {
                     padding: const EdgeInsets.fromLTRB(0,15,0,0),
                     child: ElevatedButton(
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.inversePrimary),
+                        backgroundColor: MaterialStateProperty.resolveWith((states) => Theme.of(context).colorScheme.secondary),
                       ),
                       onPressed: (){
                         createTicketType().then(

@@ -32,7 +32,7 @@ class AppTheme {
   final bool isDarkMode;
 
   AppTheme({
-    this.isDarkMode = false,
+    this.isDarkMode = true,
   });
 
 

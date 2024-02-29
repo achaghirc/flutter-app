@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/infraestructure/models/authentication/jwt_authentication_response_dto.dart';
 import 'package:my_app/infraestructure/models/squad/organizer_squad_dto.dart';
+import 'package:my_app/infraestructure/models/squad/public_relation_squad_dto.dart';
 import 'package:my_app/infraestructure/models/tickets/custom/event_public_relation_data_dto.dart';
 import 'package:my_app/infraestructure/repositories/event_public_relations_repository_impl.dart';
 import 'package:my_app/infraestructure/repositories/organizer_squad_respository_impl.dart';
@@ -12,11 +13,9 @@ import 'package:my_app/shared/widgets/bottomSheet/bottom_sheet_widget.dart';
 import 'package:my_app/shared/widgets/custom_painter/wave_custom_painter.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/navigation/bottom_navigation_widget.dart';
-import 'package:my_app/shared/widgets/shimmed/shimmed_data_resume_widget.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_rrpps_list.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_user_event_info.dart';
 import 'package:my_app/shared/widgets/tickets/data_resume_widget.dart';
-import 'package:shimmer/shimmer.dart';
 
 class PublicRelationZone extends ConsumerStatefulWidget {
   const PublicRelationZone({super.key});
@@ -43,8 +42,8 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
     return result;
   }
 
-  Future<List<OrganizerSquadDTO>> publicRelationSquads() async{
-    List<OrganizerSquadDTO> squads = await OrganizerSquadRepositoryImpl(session).getSquads();
+  Future<List<PublicRelationSquadDTO>> publicRelationSquads() async{
+    List<PublicRelationSquadDTO> squads = await OrganizerSquadRepositoryImpl(session).getSquads();
     return squads;
   }
 
@@ -54,7 +53,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         scrolledUnderElevation: 0.0,
           actions: const [
             AppBarActions()
@@ -164,8 +163,15 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                     builder: (BuildContext context, AsyncSnapshot snapshot) {
                       if(snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData){
                         return const ShimmedRRPPSList(size: 3);
-                      } else {
-                      List<OrganizerSquadDTO> squads = snapshot.data as List<OrganizerSquadDTO>;
+                      } else if(snapshot.data == null) {
+                        return Center(
+                          child: Text(
+                            'No perteneces a ningún equipo aún',
+                            style: GoogleFonts.nunito(),
+                          ),
+                        );
+                      }else{
+                      List<PublicRelationSquadDTO> squads = snapshot.data as List<PublicRelationSquadDTO>;
                       return ListView.separated(
                         itemCount: squads.length,
                         separatorBuilder: (context, index) => 
@@ -177,13 +183,13 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                           ),
                         shrinkWrap: true,
                         itemBuilder: (context, index) {
-                          OrganizerSquadDTO squad = squads.elementAt(index);
+                          PublicRelationSquadDTO squad = squads.elementAt(index);
                           return ListTile(
                             onTap: () {
                               BottomSheetWidget.showModalBottomSheet(
                                 context,
                                 _TeamOrganizerDetails(squad:squad),
-                                MediaQuery.of(context).size.height * 0.35,
+                                MediaQuery.of(context).size.height * 0.45,
                                 150,
                                 null,
                                 BoxDecoration(
@@ -193,14 +199,14 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                               );
                             },
                             title: Text(
-                              squad.organizerName.toUpperCase(),
+                              squad.organizer.name.toUpperCase(),
                               style: GoogleFonts.nunito(
                                 fontSize: 16,
                                 fontWeight: FontWeight.w700
                               ),
                             ),
                             subtitle: Text(
-                              squad.organizerName,
+                              squad.organizerSquad.userUsername,
                               style: GoogleFonts.nunito(
                                 
                               ),
@@ -208,13 +214,13 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                             leading: const Icon(
                               Icons.groups_2_outlined
                             ),
-                            trailing: const Wrap(
+                            trailing: Wrap(
                               alignment: WrapAlignment.center,
                               spacing: 15,
                               children: [
                                 Icon(
-                                  Icons.check_circle_outline_outlined,
-                                  color: Colors.greenAccent,
+                                  squad.eventSummary.active > 0 ? Icons.check_circle_outline_outlined : Icons.close_outlined,
+                                  color: squad.eventSummary.active > 0 ?Colors.greenAccent : Colors.redAccent,
                                 )
                               ],
                             ),
@@ -236,7 +242,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
 }
 
 class _TeamOrganizerDetails extends StatelessWidget {
-  final OrganizerSquadDTO squad;
+  final PublicRelationSquadDTO squad;
   const _TeamOrganizerDetails({
     super.key,
     required this.squad
@@ -250,7 +256,7 @@ class _TeamOrganizerDetails extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.02,
         ),
         Text(
-          squad.organizerName,
+          squad.organizer.name,
           style: GoogleFonts.nunito(
             fontSize: 35,
             fontWeight: FontWeight.bold
@@ -262,14 +268,14 @@ class _TeamOrganizerDetails extends StatelessWidget {
             backgroundImage: AssetImage('assets/userIcons/menProfile.png'),
           ),
           title: Text(
-            squad.userPersonName,
+            squad.organizerSquad.userPersonName,
             style: GoogleFonts.nunito(
               fontSize: 20,
               fontWeight: FontWeight.w700
             ),
           ),
           subtitle: Text(
-            squad.userUsername,
+            squad.organizerSquad.userUsername,
             style: GoogleFonts.nunito(
               fontSize: 16,
               fontWeight: FontWeight.w600
@@ -306,7 +312,63 @@ class _TeamOrganizerDetails extends StatelessWidget {
           trailing: Wrap(
             children: [
               Text(
-                '${squad.organizerTotalMembers}',
+                '${squad.organizer.totalMembers}',
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+              )
+            ]
+          ),
+        ),
+        ListTile(
+          leading: CircleAvatar(
+            radius: 25,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            child: Icon(
+              Icons.event_note_outlined,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          title: Text(
+            'Eventos asignados',
+            style: GoogleFonts.nunito(
+              fontSize: 15,
+              fontWeight: FontWeight.w700
+            ),
+          ),
+          trailing: Wrap(
+            children: [
+              Text(
+                '${squad.eventSummary.total}',
+                style: GoogleFonts.nunito(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold
+                ),
+              )
+            ]
+          ),
+        ),
+        ListTile(
+          leading: CircleAvatar(
+            radius: 25,
+            backgroundColor: Theme.of(context).colorScheme.surface,
+            child: Icon(
+              Icons.event_available_outlined,
+              color: Theme.of(context).colorScheme.onSurface,
+            ),
+          ),
+          title: Text(
+            'Eventos activos',
+            style: GoogleFonts.nunito(
+              fontSize: 15,
+              fontWeight: FontWeight.w700
+            ),
+          ),
+          trailing: Wrap(
+            children: [
+              Text(
+                '${squad.eventSummary.active}',
                 style: GoogleFonts.nunito(
                   fontSize: 16,
                   fontWeight: FontWeight.bold

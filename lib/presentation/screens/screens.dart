@@ -1,5 +1,3 @@
-import 'package:my_app/presentation/screens/rrpps/public_relation_details_screen.dart';
-
 export 'package:my_app/presentation/screens/authentication/signin_screen.dart';
 export 'package:my_app/presentation/screens/authentication/signup_screen.dart';
 export 'package:my_app/presentation/screens/basic/entry_screen.dart';
@@ -14,5 +12,7 @@ export 'package:my_app/presentation/screens/rrpps/public_relation_details_screen
 export 'package:my_app/presentation/screens/rrpps/public_relation_zone_screen.dart';
 export 'package:my_app/presentation/screens/rrpps/squad_event_assigned_screen.dart';
 export 'package:my_app/presentation/screens/rrpps/squad_management_screen.dart';
+export 'package:my_app/presentation/screens/user/change_password_screen.dart';
+export 'package:my_app/presentation/screens/user/user_personal_data_screen.dart';
 export 'package:my_app/presentation/screens/user/user_profile_screen.dart';
 

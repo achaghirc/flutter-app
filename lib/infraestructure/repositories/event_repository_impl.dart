@@ -24,9 +24,28 @@ class EventRepositoryImpl extends BasicService implements EventRepository {
 
     Response res = await getCall(
       baseURL, 
-      '/api/events/findEvents',
+      '/api/events/findEventsAvailable',
     );
     if(res.statusCode == 200) {
+      Iterable events = json.decode(utf8.decode(res.bodyBytes));
+      return List<EventDTO>.from(events.map((event) => EventDTO.fromJson(event)));
+    } else {
+      return List.empty();
+    }
+  }
+
+   @override
+  Future<List<EventDTO>> getAllEventsOrganizer(String organizerId) async {
+    // TODO: implement getAllEvents By organizer 
+
+    Response res = await getCall(
+      baseURL, 
+      '/api/events/findEventsByOrganizerId',
+      queryParameters: {
+        "organizerId": organizerId
+      }
+    );
+    if(res.statusCode == 200 ||res.statusCode == 204) {
       Iterable events = json.decode(utf8.decode(res.bodyBytes));
       return List<EventDTO>.from(events.map((event) => EventDTO.fromJson(event)));
     } else {

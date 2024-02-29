@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_app/presentation/providers/theme_provider.dart';
 
-class DataResumeWidget extends StatelessWidget {
+class DataResumeWidget extends ConsumerWidget {
   final String title;
   final dynamic value;
   final Color color;
@@ -19,7 +21,8 @@ class DataResumeWidget extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    bool isDarkMode = ref.read(themeNotifierProvider).isDarkMode;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -29,7 +32,8 @@ class DataResumeWidget extends StatelessWidget {
               CircleAvatar(
                 backgroundColor: iconColor ?? Colors.white,
                 child: Icon(
-                  icon
+                  icon,
+                  color: isDarkMode ? Theme.of(context).colorScheme.surface : Theme.of(context).colorScheme.inverseSurface,
                 )
               ),
               const SizedBox(

@@ -78,20 +78,22 @@ class _TicketsEventScreenState extends ConsumerState<TicketsEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         leading: Builder(
           builder: (BuildContext context){
             return IconButton(
               onPressed: (){
                 context.pop();
               }, 
-              icon: const Icon(Icons.arrow_back)
+              icon: const Icon(Icons.arrow_back, color: Colors.white,)
             );
           }
         ),
         title: Text(
           'Entradas',
-          style: GoogleFonts.nunito(),
+          style: GoogleFonts.nunito(
+            color: Colors.white
+          ),
         ),
         actions: const [
           AppBarActions()
@@ -157,7 +159,7 @@ class _TicketsEventScreenState extends ConsumerState<TicketsEventScreen> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               DataResumeWidget(title: 'VENDIDAS', value: data.amountSold, icon: Icons.local_activity_outlined, color: Colors.white),
-                              DataResumeWidget(title: 'RESTANTES', value: '${data.amountRemaining}€', icon: Icons.local_activity_outlined, color: Colors.white),
+                              DataResumeWidget(title: 'RESTANTES', value: '${data.amountRemaining}', icon: Icons.local_activity_outlined, color: Colors.white),
                               DataResumeWidget(title: 'INGRESOS', value: '${data.totalIncome}€', icon: Icons.euro_outlined, color: Colors.white)
                             ],
                           ),

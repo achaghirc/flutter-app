@@ -18,7 +18,7 @@ class StripeRepositoryImpl extends BasicService implements StripeRepository {
     // TODO: implement createPaymentIntent
     Response res = await postCall(
       baseURL,
-      '/stripe/api/paymentIntent',
+      '/stripe/payment/paymentIntent',
       body: jsonEncode(requestDTO),
     );
 
@@ -33,7 +33,7 @@ class StripeRepositoryImpl extends BasicService implements StripeRepository {
   Future<ResponseStripePayment> cancelPaymentIntent(String paymentIntentId) async{
     Response res = await getCall(
       baseURL,
-      '/stripe/api/cancelPaymentIntent',
+      '/stripe/payment/cancelPaymentIntent',
       queryParameters: {
         "paymentIntentId": paymentIntentId
       }
@@ -50,7 +50,7 @@ class StripeRepositoryImpl extends BasicService implements StripeRepository {
   Future<PaymentMethodCollection> listCustomerCards(String userId) async{
     Response res = await getCall(
       baseURL,
-      '/stripe/api/cards',
+      '/stripe/cards',
       queryParameters: {
         "userId": userId
       }

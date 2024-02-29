@@ -58,6 +58,12 @@ class _EventRRPPsScreenState extends ConsumerState<EventRRPPsScreen> {
     return result;
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +72,9 @@ class _EventRRPPsScreenState extends ConsumerState<EventRRPPsScreen> {
       child: Scaffold(
         appBar: AppBar(
           scrolledUnderElevation: 0.0,
+          leading: const Icon(
+            Icons.search_outlined
+          ),
           title: Padding(
             padding: const EdgeInsets.fromLTRB(8.0, 0.0, 0.0, 0.0),
             child: SearchWidget(
@@ -119,12 +128,12 @@ class _YourRRPPEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(events.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'No hay enventos',
           style: TextStyle(
             fontSize: 15,
-            color: Colors.black
+            color: Theme.of(context).colorScheme.inverseSurface
           ),
         ),
       );
@@ -165,12 +174,12 @@ class _RestOfEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if(events.isEmpty) {
-      return const Center(
+      return Center(
         child: Text(
           'No hay enventos',
           style: TextStyle(
             fontSize: 15,
-            color: Colors.black
+            color: Theme.of(context).colorScheme.inverseSurface
           ),
         ),
       );

@@ -18,9 +18,9 @@ class RoleDTO {
   });
 
     factory RoleDTO.fromJson(Map<String, dynamic> json) => RoleDTO(
-      id: json["id"],
-      name: json["name"],
-      code: json["code"],
+      id: json["id"] ?? 0,
+      name: json["name"] ?? '',
+      code: json["code"] ?? '',
   );
 
   Map<String, dynamic> toJson() => {

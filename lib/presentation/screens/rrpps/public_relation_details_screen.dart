@@ -55,7 +55,7 @@ class _RelationPublicDetailsScreenState extends ConsumerState<PublicRelationDeta
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         scrolledUnderElevation: 0.0,
         title: Text(
           'Ventas',

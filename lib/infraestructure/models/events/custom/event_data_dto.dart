@@ -13,8 +13,8 @@ class EventDataDTO {
   });
 
   factory EventDataDTO.fromJson(Map<String, dynamic> json) => EventDataDTO(
-    allEvents: List<EventDTO>.from(json["allEvents"].map((event) => EventDTO.fromJson(event))), 
-    assignedEvents: List<EventCodeDTO>.from(json["assignedEvents"].map((event) => EventCodeDTO.fromJson(event))),
+    allEvents: json["allEvents"] != null ? List<EventDTO>.from(json["allEvents"].map((event) => EventDTO.fromJson(event))) : List.empty(), 
+    assignedEvents: json["assignedEvents"] != null ? List<EventCodeDTO>.from(json["assignedEvents"].map((event) => EventCodeDTO.fromJson(event))) : List.empty(),
   );
 
 

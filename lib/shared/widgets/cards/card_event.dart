@@ -93,7 +93,7 @@ class CardEvent extends StatelessWidget {
                   duration: const Duration(seconds: 1),
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.95,
-                    height: MediaQuery.of(context).size.height * 0.18,
+                    height: MediaQuery.of(context).size.height * 0.20,
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -147,23 +147,25 @@ class CardInformation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(15.0,0,0,0),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: Colors.white,
-          ),
-          const SizedBox(width: 10),
-          Text(
-            information,
-            style: GoogleFonts.nunito(
+    return SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(15.0,0,0,0),
+        child: Row(
+          children: [
+            Icon(
+              icon,
               color: Colors.white,
-              fontWeight: FontWeight.w700
             ),
-          ),
-        ],
+            const SizedBox(width: 10),
+            Text(
+              information,
+              style: GoogleFonts.nunito(
+                color: Colors.white,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -215,7 +217,7 @@ class _EventSelectRelationPublicState extends State<_EventSelectRelationPublic> 
     return publicRelationsList;
   }
   Future<void> _refreshPublicRelationsList() async {
-    List<EventPublicRelationsDTO> publicRelationsDBList = await EventPublicRelationsRepositoryImpl(session).getAllPublicRelationdByEventId(_eventId.toString());
+    List<EventPublicRelationsDTO> publicRelationsDBList = await EventPublicRelationsRepositoryImpl(widget.session).getAllPublicRelationdByEventId(_eventId.toString());
     setState(() {
       publicRelationsList = publicRelationsDBList;
     });  
@@ -366,7 +368,7 @@ class _EventSelectRelationPublicState extends State<_EventSelectRelationPublic> 
               if (snapshot.connectionState == ConnectionState.waiting || !snapshot.hasData) {
                 return ShimmedRRPPSList(size: publicRelationsList.isEmpty ? 9 :  publicRelationsList.length );
               } else {
-                String emptyMessage = 'Añade tu primer relaciones publicas.';
+                String emptyMessage = 'Este evento no tiene asignados relaciones publicas.';
                 List<EventPublicRelationsDTO> data = snapshot.data as List<EventPublicRelationsDTO>;
                 if(searchController.text.isEmpty && _ticketCodeController.text.length == 8){
                   data = publicRelationsList;

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -7,6 +9,7 @@ import 'package:moment_dart/moment_dart.dart';
 import 'package:my_app/infraestructure/models/events/event_dto.dart';
 import 'package:my_app/presentation/screens/events/admin/create_event_ubication.dart';
 import 'package:my_app/shared/form/form_layout.dart';
+import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 
 class CreateEvent extends StatefulWidget {
@@ -26,9 +29,66 @@ class _CreateEventState extends State<CreateEvent> {
   final formatHour = DateFormat("HH:mm");
   final formatDate = DateFormat("dd/MM/yyyy HH:mm");
   final bool _autovalidate = false;
+  late bool enableLimitHour = false;
   
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _initDateControlled = TextEditingController();
+  final TextEditingController _endDateControlled = TextEditingController();
+  final TextEditingController _limitHourController = TextEditingController();
+
+
+  void buildDateFromPickers(TextEditingController controller, String paramDate) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime.now(), 
+      lastDate: DateTime(2030)
+    );
+    if (pickedDate == null) return Future.error('Error on date select');
+    if (!context.mounted) return;
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context, 
+      initialTime: TimeOfDay.fromDateTime(pickedDate)
+    );
+    if(selectedTime != null){
+      DateTime date = DateTime(
+        pickedDate.year, pickedDate.month, pickedDate.day, selectedTime.hour, selectedTime.minute
+      );
+      print(date);
+      String formatDate =  DateFormat('dd/MM/yyyy HH:mm').format(date);
+      setState(() {
+        controller.text = formatDate;
+        if(paramDate == 'START'){
+          startDate = date;
+          enableLimitHour = true;
+        }else{
+          endDate = date;
+        }
+      });
+    }
+  }
+  void buildDateTimePicker(TextEditingController controller, DateTime paramDate) async {
+    if (!context.mounted) return;
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context, 
+      initialTime: _initDateControlled.text != '' ? TimeOfDay.fromDateTime(startDate) : TimeOfDay.fromDateTime(DateTime.now())
+    );
+    if(selectedTime != null){
+      DateTime date = DateTime(
+        DateTime.now().year, DateTime.now().month, startDate.day, selectedTime.hour, selectedTime.minute
+      );
+      if(date.isBefore(startDate)){
+        date = date.add(const Duration(days: 1));
+      }
+      String formatDate =  DateFormat('HH:mm').format(date);
+      setState(() {
+        controller.text = formatDate;
+        paramDate = date;
+      });
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,39 +102,12 @@ class _CreateEventState extends State<CreateEvent> {
         padding: const EdgeInsets.all(10),
         child: ListView(
           children: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  'Outnow',
-                  style: GoogleFonts.nunito(
-                    fontSize: 55,
-                    fontWeight: FontWeight.w800
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(10,0,0,0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(
-                    'Crea tu evento',
-                    style: GoogleFonts.nunito(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              ),
-            ),
-             Form(
+            const TextIconWidget(),
+            Form(
               key: _fbKey,
               autovalidateMode: _autovalidate ? AutovalidateMode.onUserInteraction : AutovalidateMode.disabled,
-              child: FormLayout(children: [
+              child: FormLayout(
+                children: [
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
@@ -92,29 +125,32 @@ class _CreateEventState extends State<CreateEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
                         suffixIcon: const Icon(Icons.edit_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Nombre',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (DateTime val) {
-                        startDate = val;
-                      },
+                    child: TextFormField(
+                      controller: _initDateControlled,
+                      readOnly: true,
+                      onTap: () => buildDateFromPickers(_initDateControlled, 'START'),
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -122,25 +158,27 @@ class _CreateEventState extends State<CreateEvent> {
                         hintStyle: const TextStyle(color: Colors.black45),
                         errorStyle:const TextStyle(color: Colors.redAccent),
                         suffixIcon:const Icon(Icons.event_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Fecha de Inicio',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (val) {
-                        endDate = val;
+                    child: TextFormField(
+                      controller: _endDateControlled,
+                      readOnly: true,
+                      onTap: () => buildDateFromPickers(_endDateControlled, 'END'),
+                      onChanged: (val) {
+                        _fbKey.currentState!.validate();
                       },
-                      mode: DateTimeFieldPickerMode.dateAndTime,
-                      autovalidateMode: AutovalidateMode.always,
                       validator: (e) {
-                        if(e!= null && e.isBefore(startDate)){
+                        if(e!= null && _initDateControlled.text != '' && endDate.isBefore(startDate)){
                           return 'Fecha fin debe ser posterior a fecha inicio.';
                         }
                         return null;
@@ -148,6 +186,7 @@ class _CreateEventState extends State<CreateEvent> {
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
@@ -155,45 +194,49 @@ class _CreateEventState extends State<CreateEvent> {
                         hintStyle: const TextStyle(color: Colors.black45),
                         errorStyle:const TextStyle(color: Colors.redAccent),
                         suffixIcon:const Icon(Icons.event_note_outlined),
-                        border: const OutlineInputBorder(),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
                         labelText: 'Fecha de Fin',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
-                  ),
+                  ),                  
                   Container(
                     padding: const EdgeInsets.all(10),
-                    child: DateTimeFormField(
-                      use24hFormat: true,
-                      onDateSelected: (val) {
-                        limitHour = val;
-                      },
-                      autovalidateMode: AutovalidateMode.always,
-                      validator: (DateTime? e) {
-                        return (e?.millisecond ?? 0) < startDate.millisecond
+                    child: TextFormField(
+                      controller: _limitHourController,
+                      enabled: enableLimitHour,
+                      onTap: () => buildDateTimePicker(_limitHourController, limitHour),
+                      validator: (e) {
+                        return e != null && _initDateControlled.text != '' && limitHour.millisecond < startDate.millisecond 
                             ? 'Debe ser posterior a fecha inicio'
                             : null;
                       },
                       decoration: InputDecoration(
                         focusColor: Theme.of(context).colorScheme.secondary,
                           focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide(
                               color: Theme.of(context).colorScheme.secondary,
                           )
                         ),
                         hintStyle: const TextStyle(color: Colors.black45),
-                        errorStyle: const TextStyle(color: Colors.redAccent),
-                        border: const OutlineInputBorder(),
-                        suffixIcon: const Icon(Icons.schedule_outlined),
-                        labelText: 'Hora límite',
+                        errorStyle:const TextStyle(color: Colors.redAccent),
+                        suffixIcon:const Icon(Icons.event_note_outlined),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        labelText: 'Hora Límite',
                         labelStyle: GoogleFonts.nunito(
-                          color: Theme.of(context).colorScheme.secondary
+                          color: Theme.of(context).colorScheme.onBackground
                         )
                       ),
                     ),
                   ),
+                  
                   Container(
                     padding: const EdgeInsets.all(10),
                     height: MediaQuery.of(context).size.height * 0.2,
@@ -221,20 +264,23 @@ class _CreateEventState extends State<CreateEvent> {
                             minLines: 3,
                             maxLines: null,
                             maxLength: 80,
+                            textInputAction: TextInputAction.done,
                             //expands: true,
                             decoration: InputDecoration(
                               focusColor: Theme.of(context).colorScheme.secondary,
                                 focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(20),
                                   borderSide: BorderSide(
                                     color: Theme.of(context).colorScheme.secondary,
                                 )
                               ),
-                              border: const OutlineInputBorder(),
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
                               labelText: 'Descripción',
                               labelStyle: GoogleFonts.nunito(
-                                color: Theme.of(context).colorScheme.secondary
+                                color: Theme.of(context).colorScheme.onBackground
                               ),
-                              
                             ),
                           ),
                         ),
@@ -245,10 +291,10 @@ class _CreateEventState extends State<CreateEvent> {
                     height: MediaQuery.of(context).size.height * .07,
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     child: SizedBox(
-                      width: MediaQuery.of(context).size.width * .5,
+                      width: MediaQuery.of(context).size.width * .8,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+                          backgroundColor: Theme.of(context).colorScheme.secondary,
                         ),
                         onPressed: (){
                            if(_fbKey.currentState!.validate()){
@@ -278,7 +324,8 @@ class _CreateEventState extends State<CreateEvent> {
                               'CONTINUAR',
                               style: GoogleFonts.nunito(
                                 fontSize: 18,
-                                color: Theme.of(context).colorScheme.background,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700
                               ),
                           )
                         ),
