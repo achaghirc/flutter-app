@@ -29,6 +29,8 @@ class EventDTO {
     String? ubicationCountry;
     String? ubicationPostalCode;
     String? ubicationMoreInfo;
+    String statusCode;
+    String statusLocatedCode;
     List<ImageDTO> medias;
     List<EventTicketsDTO>? tickets;
 
@@ -50,6 +52,8 @@ class EventDTO {
         this.ubicationCountry,
         this.ubicationPostalCode,
         this.ubicationMoreInfo,
+        required this.statusCode,
+        required this.statusLocatedCode,
         required this.medias,
         this.tickets,
     });
@@ -72,6 +76,8 @@ class EventDTO {
       ubicationCountry: jsonMap["ubicationCountry"] ?? '',
       ubicationPostalCode: jsonMap["ubicationPostalCode"] ?? '',
       ubicationMoreInfo: jsonMap["ubicationMoreInfo"] ?? '',
+      statusCode: jsonMap["statusCode"] ?? '',
+      statusLocatedCode: jsonMap["statusLocatedCode"] ?? '',
       medias: jsonMap["medias"] == null ? [] : List<ImageDTO>.from(jsonMap["medias"]!.map((x) => ImageDTO.fromJson(x))), 
       tickets: jsonMap["tickets"] == null ? [] : List<EventTicketsDTO>.from(jsonMap["tickets"]!.map((x) => EventTicketsDTO.fromJson(x))), 
     );

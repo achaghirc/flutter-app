@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -37,19 +38,28 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
   late JwtAuthenticationResponseDTO session;
 
   double calculateRRPPTicketsComission(){
-    return _tickets.map((e) => e.eventTicketTicketCommission ?? 0.0).reduce((a, b) => a+b);
+    return roundDouble(_tickets.map((e) => e.eventTicketTicketCommission ?? 0.0).reduce((a, b) => a+b), 2);
   }
 
+  double roundDouble(double value, int places){
+    double mod = pow(10.0, places).roundToDouble(); 
+    return ((value * mod).round().toDouble() / mod); 
+  }
+
+
   double calculatePlatformCommission(){
-    return _tickets.length * 0.5;
+    double value = (_tickets.map((e) => e.price).reduce((a, b) => a+b) * 1.5 / 100) + 0.25;
+    return roundDouble(value, 2);
+    //return _tickets.length * 0.5;
   }
   
 
   void totalAmount(){
     _ticketComission = calculateRRPPTicketsComission();
     _platformComission = calculatePlatformCommission();
-    _totalAmount = _tickets.map((e) => e.price).reduce((a, b) => a+b) + _ticketComission + _platformComission;
-    _ticketsAmount = _totalAmount - _ticketComission - _platformComission;
+    double valueTotal = _tickets.map((e) => e.price).reduce((a, b) => a+b) + _ticketComission + _platformComission;
+    _totalAmount = roundDouble(valueTotal, 2);
+    _ticketsAmount = roundDouble(_totalAmount - _ticketComission - _platformComission, 2);
   }
   
   @override

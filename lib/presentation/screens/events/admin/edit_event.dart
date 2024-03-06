@@ -1,10 +1,8 @@
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:moment_dart/moment_dart.dart';
 import 'package:my_app/infraestructure/models/authentication/jwt_authentication_response_dto.dart';
 import 'package:my_app/infraestructure/models/events/event_dto.dart';
 import 'package:my_app/infraestructure/repositories/event_repository_impl.dart';
@@ -32,16 +30,20 @@ class _EditEventState extends ConsumerState<EditEvent> {
   final _fbKey = GlobalKey<FormState>();
   late String name;
   late String description;
-  late DateTime startDate;
-  late DateTime endDate;
-  late DateTime limitHour;
+  late DateTime _startDate;
+  late DateTime _endDate;
+  late DateTime _limitHour;
   final formatHour = DateFormat("HH:mm");
-  final formatDate = DateFormat("dd/MM/yyyy HH:mm");
+  final formatVisualDate = DateFormat("dd/MM/yyyy HH:mm");
+  final formatBackendDate = DateFormat("yyyy-MM-ddTHH:mm:ss");
   final bool _autovalidate = false;
   var isLoading = false;
   
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
+  late TextEditingController _startDateController;
+  late TextEditingController _endDateController;
+  late TextEditingController _limitHourController;
 
   @override
   void initState() {
@@ -52,12 +54,15 @@ class _EditEventState extends ConsumerState<EditEvent> {
       session = ref.read(sessionProvider).session;
     }
     _event = widget.event;
-    startDate = DateTime.tryParse(_event.startDate) ?? DateTime.now();
-    endDate = DateTime.tryParse(_event.endDate) ?? DateTime.now();
-    limitHour = DateTime.tryParse(_event.limitHour) ?? DateTime.now();
+    _startDate = DateTime.tryParse(_event.startDate) ?? DateTime.now();
+    _endDate = DateTime.tryParse(_event.endDate) ?? DateTime.now();
+    _limitHour = DateTime.tryParse(_event.limitHour) ?? DateTime.now();
     _nameController = TextEditingController();
     _descriptionController = TextEditingController();
     _nameController.value = TextEditingValue(text: _event.name);
+    _startDateController = TextEditingController(text: formatVisualDate.format(DateTime.tryParse(_event.startDate)?? DateTime.now()));
+    _endDateController = TextEditingController(text: formatVisualDate.format(DateTime.tryParse(_event.endDate)?? DateTime.now()));
+    _limitHourController = TextEditingController(text: formatHour.format(DateTime.tryParse(_event.limitHour)?? DateTime.now()));
     _descriptionController.value = TextEditingValue(text: _event.description);
   }
 
@@ -79,10 +84,14 @@ class _EditEventState extends ConsumerState<EditEvent> {
         pickedDate.year, pickedDate.month, pickedDate.day, selectedTime.hour, selectedTime.minute
       );
       setState(() {
-        if(paramDate == 'START'){
-          startDate = date;
-        }else{
-          endDate = date;
+        if(paramDate == 'START') {
+          _startDate = date;
+          _startDateController.text = formatVisualDate.format(date);
+          _event.startDate = formatBackendDate.format(date);
+        } else {
+          _endDate = date;
+          _endDateController.text = formatVisualDate.format(date);
+          _event.endDate = formatBackendDate.format(date);
         }
       });
     }
@@ -91,17 +100,19 @@ class _EditEventState extends ConsumerState<EditEvent> {
     if (!context.mounted) return;
     TimeOfDay? selectedTime = await showTimePicker(
       context: context, 
-      initialTime: TimeOfDay.fromDateTime(startDate)
+      initialTime: TimeOfDay.fromDateTime(_startDate)
     );
     if(selectedTime != null){
       DateTime date = DateTime(
-        DateTime.now().year, DateTime.now().month, startDate.day, selectedTime.hour, selectedTime.minute
+        DateTime.now().year, DateTime.now().month, _startDate.day, selectedTime.hour, selectedTime.minute
       );
-      if(date.isBefore(startDate)){
+      if(date.isBefore(_startDate)){
         date = date.add(const Duration(days: 1));
       }
       setState(() {
-        paramDate = date;
+        _limitHourController.text = formatHour.format(date);
+        _limitHour = date;
+        _event.limitHour = formatBackendDate.format(date);
       });
     }
   }
@@ -218,7 +229,12 @@ class _EditEventState extends ConsumerState<EditEvent> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
-                      initialValue: DateFormat("dd/MM/yyyy HH:mm").format(startDate),
+                      controller: _startDateController,
+                      // onChanged: (val){
+                      //   setState(() {
+                      //     _startDate = DateTime.tryParse(val) ?? DateTime.now();
+                      //   });
+                      // },
                       readOnly: true,
                       onTap: () => buildDateFromPickers('START'),
                       decoration: InputDecoration(
@@ -245,14 +261,14 @@ class _EditEventState extends ConsumerState<EditEvent> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
-                      initialValue: DateFormat("dd/MM/yyyy HH:mm").format(endDate),
+                      controller: _endDateController,
                       readOnly: true,
                       onTap: () => buildDateFromPickers('END'),
                       onChanged: (val) {
                         _fbKey.currentState!.validate();
                       },
                       validator: (e) {
-                        if(e!= null && endDate.isBefore(startDate)){
+                        if(e!= null && _endDate.isBefore(_startDate)){
                           return 'Fecha fin debe ser posterior a fecha inicio.';
                         }
                         return null;
@@ -281,10 +297,10 @@ class _EditEventState extends ConsumerState<EditEvent> {
                   Container(
                     padding: const EdgeInsets.all(10),
                     child: TextFormField(
-                      initialValue: DateFormat("HH:mm").format(limitHour),
-                      onTap: () => buildDateTimePicker(limitHour),
+                      controller: _limitHourController,
+                      onTap: () => buildDateTimePicker(_limitHour),
                       validator: (e) {
-                        return e != null && limitHour.millisecond < startDate.millisecond 
+                        return e != null && _limitHour.millisecond < _startDate.millisecond 
                             ? 'Debe ser posterior a fecha inicio'
                             : null;
                       },
@@ -358,7 +374,7 @@ class _EditEventState extends ConsumerState<EditEvent> {
                         ),
                       ],
                     ),
-                  ),
+                  ),                              
                   Container(
                     height: MediaQuery.of(context).size.height * .07,
                     padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),

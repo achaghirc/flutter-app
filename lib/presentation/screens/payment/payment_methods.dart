@@ -7,9 +7,6 @@ import 'package:my_app/infraestructure/models/stripe/payment/payment_method_coll
 import 'package:my_app/infraestructure/models/stripe/payment/payment_method_dto.dart';
 import 'package:my_app/infraestructure/repositories/stripe/stripe_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
-import 'package:my_app/presentation/screens/payment/stripe/stripe_pay_screen.dart';
-import 'package:my_app/presentation/screens/screens.dart';
-import 'package:my_app/shared/widgets/payment/credit_card_create_widget.dart';
 
 class PaymentMethods extends ConsumerStatefulWidget {
   const PaymentMethods({super.key});
@@ -52,9 +49,13 @@ class _PaymentMethodsState extends ConsumerState<PaymentMethods> {
               if(snapshot.connectionState == ConnectionState.waiting && !snapshot.hasData){
                 return const Center(child: CircularProgressIndicator());
               } else if(snapshot.data == null) {
-                return const Center(
+                return Center(
                   child: Text(
-                    'No tienes ninguna tarjeta guardada.'
+                    'No tienes ninguna tarjeta guardada.',
+                    style: GoogleFonts.nunito(
+                      color: Theme.of(context).colorScheme.onBackground
+                    ),
+                    
                   ),
                 );
               } 

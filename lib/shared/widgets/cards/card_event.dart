@@ -21,6 +21,7 @@ class CardEvent extends StatelessWidget {
   final String? subtitle;
   final String? startDate;
   final String? location;
+  final String status;
   final List<ImageDTO> images;
   final double? heightFactor;
   final bool limitSubtitle;
@@ -34,6 +35,7 @@ class CardEvent extends StatelessWidget {
     this.subtitle,
     this.startDate,
     this.location,
+    required this.status,
     required this.images,
     this.heightFactor,
     this.limitSubtitle = true,
@@ -51,6 +53,32 @@ class CardEvent extends StatelessWidget {
         return MemoryImage(images.first.data);
       }
     }
+
+    Widget buildStatusIcon(){
+      late Widget icon = Icon(Icons.pause_circle_outline_outlined);
+      switch(status){
+        case 'ACTIVE': 
+          icon = const Icon(
+            Icons.check_circle_outline,
+            color: Colors.green,
+          );
+          break;
+        case 'SCHEDULED':
+          icon = const Icon(
+            Icons.access_time_outlined,
+            color: Colors.grey,
+          );
+          break;
+        case 'FINISHED':
+          icon = const Icon(
+            Icons.circle_rounded,
+            color: Colors.red, 
+          );
+          break;
+      }
+      return icon;
+    }
+
 
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.95,
@@ -88,6 +116,11 @@ class CardEvent extends StatelessWidget {
                       image: buildImage()
                     )
                   ),
+                ),
+                Positioned(
+                  right: 0,
+                  top: 0,
+                  child: buildStatusIcon()
                 ),
                 FadeIn(
                   duration: const Duration(seconds: 1),

@@ -1,8 +1,4 @@
-import 'dart:math';
-
-import 'package:date_field/date_field.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:moment_dart/moment_dart.dart';
@@ -312,7 +308,9 @@ class _CreateEventState extends State<CreateEvent> {
                                   ubicationTypeRoad: '', 
                                   ubicationNameRoad: '', 
                                   ubicationNumber: '', 
-                                  ubicationTown: '', 
+                                  ubicationTown: '',
+                                  statusCode: '',
+                                  statusLocatedCode: '',
                                   medias: []));
                                 }
                               )

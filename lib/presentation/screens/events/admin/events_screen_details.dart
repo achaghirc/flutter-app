@@ -96,6 +96,7 @@ class EventsScreenDetails extends ConsumerWidget {
                   subtitle: event.description, 
                   startDate: event.startDate,
                   images: event.medias,
+                  status: event.statusCode,
                   heightFactor: 0.18,
                   limitSubtitle: false,
                 ),

@@ -4,7 +4,7 @@ import 'package:my_app/presentation/screens/screens.dart';
 
 final router = GoRouter(
   //initialLocation: FirebaseAuth.instance.currentUser == null ? '/' : '/myevents',
-  initialLocation: '/',
+  initialLocation: '/signin',
   routes: [
     GoRoute(
       path: '/',

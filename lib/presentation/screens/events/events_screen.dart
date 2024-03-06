@@ -33,6 +33,7 @@ class EventScreenState extends ConsumerState<EventsScreen> {
         events = await EventRepositoryImpl(session).getAllEventsAvailable();
       }else{ 
         events = await EventRepositoryImpl(session).getAllEventsOrganizer(session!.user.organizerId.first.toString());
+
       }
       return events;
     }else{
@@ -130,6 +131,7 @@ class EventScreenState extends ConsumerState<EventsScreen> {
                                     subtitle: event.description, 
                                     startDate: event.startDate,
                                     location: '${event.ubicationTypeRoad.toUpperCase()} ${event.ubicationNameRoad}',
+                                    status: event.statusCode,
                                     images: event.medias,
                                     session: session,
                                   );
