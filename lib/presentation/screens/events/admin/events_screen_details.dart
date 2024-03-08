@@ -1,5 +1,5 @@
 import 'dart:typed_data';
-
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -22,6 +22,7 @@ import 'package:my_app/shared/widgets/cards/card_event.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/navigation/bottom_navigation_widget.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_data_resume_widget.dart';
+import 'package:my_app/shared/widgets/snackBar/custom_snackbar_widget.dart';
 import 'package:my_app/shared/widgets/tickets/data_resume_widget.dart';
 
 final List<ImageDTO> medias = [
@@ -103,10 +104,8 @@ class EventsScreenDetails extends ConsumerWidget {
                 const SizedBox(
                   height: 20
                 ),
-                publicRelationCode != 'ADMIN' ? 
-                  Center(child: _RowChips(publicRelationCode: publicRelationCode))
-                :
-                const SizedBox(),
+                 
+                Center(child: _RowChips(eventId: event.id, publicRelationCode: publicRelationCode)),
                 const SizedBox(
                   height: 20
                 ),
@@ -132,8 +131,10 @@ class EventsScreenDetails extends ConsumerWidget {
 }
 
 class _RowChips extends StatelessWidget {
+  final int eventId;
   final String? publicRelationCode;
   const _RowChips({
+    required this.eventId,
     this.publicRelationCode
   });
 
@@ -143,32 +144,55 @@ class _RowChips extends StatelessWidget {
       spacing: 30.0, // gap between adjacent chips
       runSpacing: 4.0, // gap between lines
       children: <Widget>[
-        publicRelationCode != 'ADMIN' ?
-        Chip(
+        ActionChip(
           backgroundColor: Theme.of(context).colorScheme.secondary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          avatar: const Icon(
+            Icons.copy_all_outlined,
+            color: Colors.black,
+          ),
           label: Text(
-            publicRelationCode ?? '',
+            publicRelationCode ?? 'ADMIN',
             style: GoogleFonts.nunito(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.background
             ),
           ),
-        ) : const SizedBox(),
-        Chip(
+          onPressed: () {
+            var code = 'ADMIN';
+            if(publicRelationCode != null){
+              code = publicRelationCode!;
+            }
+            Clipboard.setData(ClipboardData(text: code))
+            .then((_) => CustomSnackBarWidget.openSnackBar(context, 'Success', 'Código de rrpp copiado en portapapeles.'));
+          },
+        ),
+        ActionChip(
           backgroundColor: Theme.of(context).colorScheme.secondary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          avatar: const Icon(
+            Icons.copy_all_outlined,
+            color: Colors.black,
+          ),
           label: Text(
-            'LINK',
+            'Copy Link',
             style: GoogleFonts.nunito(
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.background
             ),
           ),
+          onPressed: () {
+            var code = 'ADMIN';
+            if(publicRelationCode != null){
+              code = publicRelationCode!;
+            }
+            Clipboard.setData(ClipboardData(text: 'http://localhost:49799/#/open/event/$eventId/$code'))
+            .then((_) => CustomSnackBarWidget.openSnackBar(context, 'Success', 'Link copiado en portapapeles.'));
+          },
         ),
       ]
   );
@@ -601,6 +625,7 @@ class _EventPublicRelationResumeDataState extends State<_EventPublicRelationResu
                 padding: const EdgeInsets.fromLTRB(20.0, 5.0, 20.0, 15.0),
                 child: 
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       DataResumeWidget(
                         title: 'VENDIDAS', 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:my_app/globals.dart' as globals;
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
@@ -11,15 +12,19 @@ import 'package:my_app/presentation/router/router_app.dart';
 void main() async {
   WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
   FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
-  Stripe.publishableKey = globals.stripePublishableKey;
-  await Stripe.instance.applySettings();
-  //await Firebase.initializeApp();
+  if(!kIsWeb){
+    Stripe.publishableKey = globals.stripePublishableKey;
+    await Stripe.instance.applySettings();
+    //await Firebase.initializeApp();
+  }
   runApp(const ProviderScope(child: MyApp()));
   setup();
 }
 
 void setup() async{
-  await Future.delayed(const Duration(seconds: 10));
+  if(!kIsWeb){
+    await Future.delayed(const Duration(seconds: 4));
+  }
   FlutterNativeSplash.remove();
 }
 

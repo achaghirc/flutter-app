@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:my_app/presentation/screens/events/open/open_event_details_screen.dart';
 import 'package:my_app/presentation/screens/payment/payment_methods.dart';
 import 'package:my_app/presentation/screens/screens.dart';
 
@@ -30,6 +31,11 @@ final router = GoRouter(
       path: '/homeRRPP',
       name: 'event_home_rrpp',
       builder: (context, state) => const EventRRPPsScreen(),
+    ),
+    GoRoute(
+      path: '/homeUser',
+      name: 'event_home_user',
+      builder: (context, state) => const EventScreenUserState(),
     ),
     GoRoute(
       path: '/myrrpps',
@@ -79,6 +85,14 @@ final router = GoRouter(
         publicRelationCode: state.pathParameters['publicRelationCode'],
         assigned: state.pathParameters['assigned'],
       ) 
+    ),
+    GoRoute(
+      path: '/open/event/:id/:publicRelationCode',
+      name: 'open_event_details',
+      builder: (context, state) => OpenEventDetailsScreen(
+        id: state.pathParameters['id'],
+        publicRelationCode: state.pathParameters['publicRelationCode'],
+      ),
     ),
     GoRoute(
       path: '/payment',

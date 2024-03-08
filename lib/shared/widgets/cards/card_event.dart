@@ -8,10 +8,8 @@ import 'package:my_app/infraestructure/models/image/imageDTO.dart';
 import 'package:my_app/infraestructure/models/squad/event_public_relations_dto.dart';
 import 'package:my_app/infraestructure/repositories/event_public_relations_repository_impl.dart';
 import 'package:my_app/presentation/screens/events/admin/events_screen_details.dart';
-import 'package:my_app/presentation/screens/events/events_screen.dart';
 import 'package:my_app/shared/widgets/bottomSheet/bottom_sheet_widget.dart';
 import 'package:my_app/shared/widgets/search/search_widget.dart';
-import 'package:my_app/shared/widgets/shimmed/shimmed_rrpp.dart';
 import 'package:my_app/shared/widgets/shimmed/shimmed_rrpps_list.dart';
 
 class CardEvent extends StatelessWidget {
@@ -57,7 +55,7 @@ class CardEvent extends StatelessWidget {
     Widget buildStatusIcon(){
       late Widget icon = Icon(Icons.pause_circle_outline_outlined);
       switch(status){
-        case 'ACTIVE': 
+        case 'STARTED': 
           icon = const Icon(
             Icons.check_circle_outline,
             color: Colors.green,
@@ -71,7 +69,7 @@ class CardEvent extends StatelessWidget {
           break;
         case 'FINISHED':
           icon = const Icon(
-            Icons.circle_rounded,
+            Icons.highlight_off_outlined,
             color: Colors.red, 
           );
           break;
@@ -118,8 +116,8 @@ class CardEvent extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                  right: 0,
-                  top: 0,
+                  right: 5,
+                  top: 5,
                   child: buildStatusIcon()
                 ),
                 FadeIn(

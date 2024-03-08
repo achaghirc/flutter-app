@@ -156,6 +156,7 @@ class _YourRRPPEvents extends StatelessWidget {
               location: '${eventCode.eventUbicationTypeRoad.toUpperCase()} ${eventCode.eventUbicationNameRoad}',
               images: eventCode.eventMedias,
               rrppCode: eventCode.rrppCode,
+              status: eventCode.eventStatusCode!,
               session: session,
             );  
           }
@@ -201,6 +202,7 @@ class _RestOfEvents extends StatelessWidget {
               startDate: event.startDate,
               location: '${event.ubicationTypeRoad.toUpperCase()} ${event.ubicationNameRoad}',
               images: event.medias,
+              status: event.statusCode,
               session: session,
             );  
           }

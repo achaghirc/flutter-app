@@ -10,8 +10,8 @@ class SignUpRequest {
     String lastName;
     String email;
     String password;
-    String dni;
-    String phoneNumber;
+    String? dni;
+    String? phoneNumber;
 
     SignUpRequest({
         required this.userName,
@@ -19,8 +19,8 @@ class SignUpRequest {
         required this.lastName,
         required this.email,
         required this.password,
-        required this.dni,
-        required this.phoneNumber,
+        this.dni,
+        this.phoneNumber,
     });
 
     factory SignUpRequest.fromJson(Map<String, dynamic> json) => SignUpRequest(
@@ -29,8 +29,8 @@ class SignUpRequest {
         lastName: json["lastName"],
         email: json["email"],
         password: json["password"],
-        dni: json["dni"],
-        phoneNumber: json["phoneNumber"],
+        dni: json["dni"] ?? '',
+        phoneNumber: json["phoneNumber"] ?? '',
     );
 
     Map<String, dynamic> toJson() => {

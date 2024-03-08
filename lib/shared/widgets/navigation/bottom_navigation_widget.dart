@@ -40,19 +40,26 @@ class _BottomNavigationBarWidgetState extends ConsumerState<BottomNavigationBarW
       
        if(session!.user.roleCode == 'USER'){
         switch(location){
-          case '/home':
+          case '/homeUser':
             return 0;
           case '/tickets':
             return 1;
           default:
             return 0;
         }
-      } else {
+      } else if(session!.user.roleCode == 'ADMIN') {
         switch(location){
           case '/myrrpps':
-          case '/rrppZone':
             return 0;
           case '/home':
+            return 1;
+          default:
+            return 0;
+        }
+      } else {
+        switch(location){
+          case '/rrppZone':
+            return 0;
           case '/homeRRPP':
             return 1;
           case '/tickets':
@@ -68,7 +75,7 @@ class _BottomNavigationBarWidgetState extends ConsumerState<BottomNavigationBarW
       if(session!.user.roleCode == 'USER'){
         switch(index){
           case 0:
-            context.pushNamed('event_home');
+            context.pushNamed('event_home_user');
             break;
           case 1: 
             context.pushNamed('tickets_user_screen');

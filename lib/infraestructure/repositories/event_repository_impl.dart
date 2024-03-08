@@ -4,6 +4,7 @@ import 'package:my_app/globals.dart' as globals;
 import 'package:http/http.dart';
 import 'package:my_app/domain/repositories/event_repository.dart';
 import 'package:my_app/infraestructure/models/events/custom/event_data_dto.dart';
+import 'package:my_app/infraestructure/models/events/custom/event_organizer_dto.dart';
 import 'package:my_app/infraestructure/models/events/event_dto.dart';
 import 'package:my_app/infraestructure/repositories/queryFilters/event_query_params.dart';
 import 'package:my_app/shared/services/basic_service.dart';
@@ -35,7 +36,7 @@ class EventRepositoryImpl extends BasicService implements EventRepository {
   }
 
    @override
-  Future<List<EventDTO>> getAllEventsOrganizer(String organizerId) async {
+  Future<EventOrganizerDTO> getAllEventsOrganizer(String organizerId) async {
     // TODO: implement getAllEvents By organizer 
 
     Response res = await getCall(
@@ -46,10 +47,9 @@ class EventRepositoryImpl extends BasicService implements EventRepository {
       }
     );
     if(res.statusCode == 200 ||res.statusCode == 204) {
-      Iterable events = json.decode(utf8.decode(res.bodyBytes));
-      return List<EventDTO>.from(events.map((event) => EventDTO.fromJson(event)));
+      return EventOrganizerDTO.fromJson(jsonDecode(res.body));
     } else {
-      return List.empty();
+      return EventOrganizerDTO.fromJson({});
     }
   }
   

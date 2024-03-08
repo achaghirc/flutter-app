@@ -23,7 +23,11 @@ class AuthenticationRepositoryImpl extends BasicService implements Authenticatio
       baseURL, 
       '/api/auth/signin',
       headers: <String,String> {
-        'Content-Type': 'application/json'
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
+        'Content-Type': 'application/json',
       },
       body: jsonEncode(signinRequest)
       );
@@ -41,6 +45,10 @@ class AuthenticationRepositoryImpl extends BasicService implements Authenticatio
       "/api/auth/signup",
       body: jsonEncode(signupRequest), 
       headers: <String, String> {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+        "Access-Control-Allow-Methods": "POST, OPTIONS",
         'Content-Type': 'application/json'
       },
     );
@@ -58,6 +66,10 @@ class AuthenticationRepositoryImpl extends BasicService implements Authenticatio
       '/api/auth/validateEmail',
       queryParameters: {"email": email},
       headers: <String, String> {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
         'Content-Type': 'application/json'
       },
       );
@@ -74,6 +86,10 @@ class AuthenticationRepositoryImpl extends BasicService implements Authenticatio
       '/api/auth/availableUserName',
       queryParameters: {"userName": userName},
       headers: <String, String> {
+        "Access-Control-Allow-Origin": "*", // Required for CORS support to work
+        "Access-Control-Allow-Credentials": 'true', // Required for cookies, authorization headers with HTTPS
+        "Access-Control-Allow-Headers": "Origin,Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token,locale",
+        "Access-Control-Allow-Methods": "GET, OPTIONS",
         'Content-Type': 'application/json'
       },
       );

@@ -16,7 +16,13 @@ import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/snackBar/custom_snackbar_widget.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
-  const SignInScreen({super.key});
+  final bool? showFooter;
+  final String? pathTo;
+  const SignInScreen({
+    super.key,
+    this.showFooter,
+    this.pathTo
+  });
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _SignInState();
@@ -50,11 +56,55 @@ class _SignInState extends ConsumerState<SignInScreen> {
     return response;
   }
 
+  void navigateTo(JwtAuthenticationResponseDTO value) {
+    if (widget.pathTo != null) {
+      List<String> parts = widget.pathTo!.split("/");
+      var eventId = parts.elementAt(2);
+      var publicRelationCode = parts.elementAt(3);
+      context.goNamed("event_details", pathParameters: {"id": eventId, "publicRelationCode": publicRelationCode, "assigned": 'N'});
+    } else {
+      switch(value.user.roleCode) {
+        case 'RRPP':
+          context.goNamed('event_home_rrpp');
+          break;
+        case 'ADMIN':
+          context.goNamed('event_home');
+          break;
+        case 'USER':
+          context.goNamed('event_home_user');
+          break;
+      }
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     if(ref.read(sessionProvider).session?.token != null){
       context.push('/home');
+    }
+  }
+
+  Widget buildTitleSpace(){
+    if(widget.showFooter != null && widget.showFooter == false){
+      return ListTile(
+        leading: IconButton(
+          onPressed: (){
+            context.pop();
+          },
+          icon: const Icon(Icons.arrow_back_outlined),
+        ),
+        title: const TextIconWidget(size: 65),
+      );
+    }else{
+      return Column(
+        children: [
+          SizedBox(
+                height:  MediaQuery.of(context).size.height * 0.05,
+          ),
+          const TextIconWidget(size: 55),
+        ]
+      );
     }
   }
 
@@ -66,13 +116,10 @@ class _SignInState extends ConsumerState<SignInScreen> {
           canPop: false,
           child: ListView(
             children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.05,
-              ),
-              const TextIconWidget(size: 65),
+              buildTitleSpace(),
               const SizedBox(
                 height: 10,
-              ),         
+              ),
               CircleAvatar(
                 backgroundColor: Theme.of(context).colorScheme.primary,
                 child: Icon(
@@ -209,8 +256,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                           ),
                           onPressed: (){
                             if(_fbKey.currentState!.validate()) {
-                                submitLogin().then((value) => 
-                                context.go(value.user.roleCode == 'RRPP' ? '/homeRRPP' : '/home')
+                                submitLogin().then((value) => navigateTo(value)
                               ).catchError((onError) => {
                                 setState(() => 
                                   isLoading = false
@@ -229,6 +275,9 @@ class _SignInState extends ConsumerState<SignInScreen> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.03,
                     ),
+                    widget.showFooter != null && widget.showFooter == false ?
+                    const SizedBox()
+                    :
                     Column(
                       children: [
                         const SizedBox(
@@ -247,42 +296,42 @@ class _SignInState extends ConsumerState<SignInScreen> {
                                 image: AssetImage("assets/googleIcon_image.png") )
                             ),
                           ),
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.05,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          '¿Aún no tienes una cuenta ?',
-                          style: GoogleFonts.nunito(
-                              color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black54
-                          ),
                         ),
-                        const SizedBox(width: 10),
-                        TextButton(
-                          style: ButtonStyle(
-                            backgroundColor: MaterialStateProperty.resolveWith((states) => 
-                            Theme.of(context).buttonTheme.colorScheme?.secondary ?? Colors.grey
-                            )
-                          ),
-                          child: Text(
-                            'Registrate!',
-                            style: GoogleFonts.nunito(
-                              color: Theme.of(context).colorScheme.background
-                            ),  
-                          ),
-                          onPressed: (){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return const SignupScreen();
-                            }));
-                          },
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.05,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              '¿Aún no tienes una cuenta ?',
+                              style: GoogleFonts.nunito(
+                                  color: Theme.of(context).textTheme.bodyMedium?.color ?? Colors.black54
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            TextButton(
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.resolveWith((states) => 
+                                Theme.of(context).buttonTheme.colorScheme?.secondary ?? Colors.grey
+                                )
+                              ),
+                              child: Text(
+                                'Registrate!',
+                                style: GoogleFonts.nunito(
+                                  color: Theme.of(context).colorScheme.background
+                                ),  
+                              ),
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                  return const SignupScreen();
+                                }));
+                              },
+                            ),
+                          ],
                         ),
                       ],
-                    ),
+                    )      
                   ]
                 )
               ),

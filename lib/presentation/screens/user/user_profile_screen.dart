@@ -7,9 +7,22 @@ import 'package:my_app/infraestructure/models/authentication/jwt_authentication_
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/providers/theme_provider.dart';
 import 'package:my_app/presentation/screens/screens.dart';
-import 'package:my_app/presentation/screens/user/change_password_screen.dart';
 import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 
+
+class _HolState extends StatefulWidget {
+  const _HolState({super.key});
+
+  @override
+  State<_HolState> createState() => __HolStateState();
+}
+
+class __HolStateState extends State<_HolState> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
 
 
 
