@@ -1,8 +1,4 @@
-
-
 import 'package:my_app/infraestructure/models/stripe/customer/product_dto.dart';
-import 'package:my_app/infraestructure/models/tickets/tickets_dto.dart';
-
 class RequestDTO {
 
   String customerEmail;
@@ -11,7 +7,7 @@ class RequestDTO {
   double platformCommission;
   double rrppCommission;
   double ticketsAmount;
-
+  int adminUser;
 
   RequestDTO({
     required this.customerEmail,
@@ -20,8 +16,8 @@ class RequestDTO {
     required this.platformCommission,
     required this.rrppCommission,
     required this.ticketsAmount,
+    required this.adminUser
   });
-
 
   factory RequestDTO.fromJson(Map<String, dynamic> json) => RequestDTO(
     customerEmail: json['customerEmail'], 
@@ -30,8 +26,8 @@ class RequestDTO {
     platformCommission: json["platformCommission"], 
     rrppCommission: json["rrppCommission"], 
     ticketsAmount: json["ticketsAmount"], 
+    adminUser: json["adminUser"]
   );
-
 
   Map<String, dynamic> toJson() => {
     "customerEmail": customerEmail,
@@ -40,6 +36,6 @@ class RequestDTO {
     "platformCommission": platformCommission,
     "rrppCommission": rrppCommission,
     "ticketsAmount": ticketsAmount,
+    "adminUser": adminUser
   };
-
 }

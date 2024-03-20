@@ -78,7 +78,7 @@ class _TicketsEventScreenState extends ConsumerState<TicketsEventScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         leading: Builder(
           builder: (BuildContext context){
             return IconButton(
@@ -158,9 +158,27 @@ class _TicketsEventScreenState extends ConsumerState<TicketsEventScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              DataResumeWidget(title: 'VENDIDAS', value: data.amountSold, icon: Icons.local_activity_outlined, color: Colors.white),
-                              DataResumeWidget(title: 'RESTANTES', value: '${data.amountRemaining}', icon: Icons.local_activity_outlined, color: Colors.white),
-                              DataResumeWidget(title: 'INGRESOS', value: '${data.totalIncome}€', icon: Icons.euro_outlined, color: Colors.white)
+                              DataResumeWidget(
+                                title: 'VENDIDAS', 
+                                value: data.amountSold, 
+                                icon: Icons.local_activity_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              ),
+                              DataResumeWidget(
+                                title: 'RESTANTES', 
+                                value: '${data.amountRemaining}', 
+                                icon: Icons.local_activity_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              ),
+                              DataResumeWidget(
+                                title: 'INGRESOS', 
+                                value: '${data.totalIncome}€', 
+                                icon: Icons.euro_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              )
                             ],
                           ),
                         )
@@ -169,7 +187,7 @@ class _TicketsEventScreenState extends ConsumerState<TicketsEventScreen> {
                   }
                 }
               ),
-              const SizedBox(height: 50),
+              SizedBox(height: MediaQuery.of(context).size.height * 0.075),
               Container(
                 padding: const EdgeInsets.fromLTRB(11, 0, 0, 5),
                 alignment: Alignment.centerLeft,

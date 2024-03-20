@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "597410363247",
+    "project_id": "outnow-b232a",
+    "storage_bucket": "outnow-b232a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:597410363247:android:006e8892d6bd3de6de1a9a",
+        "android_client_info": {
+          "package_name": "com.flutter_app.outnow.my_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDVt3O79amvpIWiRBvKVt1ryJxNf-Bi8x4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -37,12 +37,12 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
   bool _userNameNotValid = false;
   final bool _autovalidate = false;
 
-  TextEditingController _userNameController = TextEditingController();
-  TextEditingController _firstNameController = TextEditingController();
-  TextEditingController _lastNameController = TextEditingController();
-  TextEditingController _passController = TextEditingController();
-  TextEditingController _confirmPassController = TextEditingController();
-  TextEditingController _emailController = TextEditingController();
+  final TextEditingController _userNameController = TextEditingController();
+  final TextEditingController _firstNameController = TextEditingController();
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _passController = TextEditingController();
+  final TextEditingController _confirmPassController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
 
   FocusNode emailFocusNode = FocusNode();
   FocusNode userNameFocusNode = FocusNode();
@@ -415,7 +415,7 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.secondary
+                          backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary
                         ),
                         icon: const Icon(
                           Icons.arrow_back,
@@ -514,10 +514,10 @@ class _SignupScreenState extends ConsumerState<SignupScreen> {
                               Theme.of(context).buttonTheme.colorScheme?.secondary
                             )
                           ),
-                          child: Text(
+                          child: const Text(
                             'Inicia Sesión!',
                             style: TextStyle(
-                              color: Theme.of(context).colorScheme.background
+                              color: Colors.white
                             ),
                           ),
                           onPressed: (){

@@ -12,7 +12,7 @@ class HeaderWavePainter extends CustomPainter {
     final paint = Paint();
     
     //Propiedades
-    paint.color =  Theme.of(context).colorScheme.secondary;
+    paint.color =  Theme.of(context).colorScheme.inversePrimary;
     paint.style = PaintingStyle.fill;
     paint.strokeWidth = 5;
 

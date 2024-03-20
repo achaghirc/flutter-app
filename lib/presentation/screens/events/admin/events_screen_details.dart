@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -15,6 +14,7 @@ import 'package:my_app/infraestructure/repositories/event_tickets_repository_imp
 import 'package:my_app/infraestructure/repositories/queryFilters/event_tickets_query_params.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/screens/events/admin/edit_event.dart';
+import 'package:my_app/presentation/screens/events/admin/event_liquidation_screen.dart';
 import 'package:my_app/presentation/screens/tickets/shop/ticket_event_buy_widget.dart';
 import 'package:my_app/presentation/screens/tickets/tickets_event_screen.dart';
 import 'package:my_app/shared/widgets/bottomSheet/bottom_sheet_widget.dart';
@@ -145,19 +145,19 @@ class _RowChips extends StatelessWidget {
       runSpacing: 4.0, // gap between lines
       children: <Widget>[
         ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           avatar: const Icon(
             Icons.copy_all_outlined,
-            color: Colors.black,
+            color: Colors.white,
           ),
           label: Text(
             publicRelationCode ?? 'ADMIN',
             style: GoogleFonts.nunito(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.background
+              color: Colors.white
             ),
           ),
           onPressed: () {
@@ -170,19 +170,19 @@ class _RowChips extends StatelessWidget {
           },
         ),
         ActionChip(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
+          backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary,
           side: BorderSide.none,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           avatar: const Icon(
             Icons.copy_all_outlined,
-            color: Colors.black,
+            color: Colors.white,
           ),
           label: Text(
             'Copy Link',
             style: GoogleFonts.nunito(
               fontSize: 20,
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).colorScheme.background
+              color: Colors.white
             ),
           ),
           onPressed: () {
@@ -190,7 +190,7 @@ class _RowChips extends StatelessWidget {
             if(publicRelationCode != null){
               code = publicRelationCode!;
             }
-            Clipboard.setData(ClipboardData(text: 'http://localhost:49799/#/open/event/$eventId/$code'))
+            Clipboard.setData(ClipboardData(text: 'http://localhost:52192/#/open/event/$eventId/$code'))
             .then((_) => CustomSnackBarWidget.openSnackBar(context, 'Success', 'Link copiado en portapapeles.'));
           },
         ),
@@ -523,45 +523,84 @@ class _EventManagementAdmin extends StatelessWidget {
           indent: 10.0,
           height: 2,
         ),
-        Container(
-          height: MediaQuery.of(context).size.height * .07,
-          padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width * .5,
-            child: Directionality(
-              textDirection: TextDirection.rtl,
-              child: ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * 0.45,
+              height: MediaQuery.of(context).size.height * .07,
+              padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * .5,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.redAccent
+                    ),
+                    onPressed: (){},
+                    icon: const Icon(
+                      Icons.highlight_remove_outlined,
+                      color: Colors.white,
+                    ),
+                    label: (
+                      // isLoading ? 
+                      //   const SizedBox(
+                      //       height: 20,
+                      //       width: 20,
+                      //       child: CircularProgressIndicator(
+                      //         color: Colors.white,
+                      //       ),
+                      //     )
+                      //     :
+                        Text(
+                            'ELIMINAR',
+                            style: GoogleFonts.nunito(
+                              fontSize: 20,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold
+                            ),
+                        )
+                    //),
+                  ),
+                            ),
                 ),
-                onPressed: (){},
-                icon: const Icon(
-                  Icons.highlight_remove_outlined,
-                  color: Colors.white,
-                ),
-                label: (
-                  // isLoading ? 
-                  //   const SizedBox(
-                  //       height: 20,
-                  //       width: 20,
-                  //       child: CircularProgressIndicator(
-                  //         color: Colors.white,
-                  //       ),
-                  //     )
-                  //     :
-                    Text(
-                        'ELIMINAR',
-                        style: GoogleFonts.nunito(
-                          fontSize: 20,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold
-                        ),
-                    )
-                //),
               ),
-                        ),
             ),
-          ),
+            Container(
+              width: MediaQuery.of(context).size.width * 0.45,
+              height: MediaQuery.of(context).size.height * .07,
+              padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * .5,
+                child: Directionality(
+                  textDirection: TextDirection.rtl,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Theme.of(context).colorScheme.background
+                    ),
+                    onPressed: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) {
+                        return EventLiquidationScreen(event: event);
+                      }));
+                    },
+                    icon: Icon(
+                      Icons.payment_outlined,
+                      color: Theme.of(context).colorScheme.onBackground,
+                    ),
+                    label: Text(
+                      'LIQUIDAR',
+                      style: GoogleFonts.nunito(
+                        fontSize: 20,
+                        color: Theme.of(context).colorScheme.onBackground,
+                        fontWeight: FontWeight.bold
+                      ),
+                    )
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ],
     );
@@ -631,24 +670,24 @@ class _EventPublicRelationResumeDataState extends State<_EventPublicRelationResu
                         title: 'VENDIDAS', 
                         value: data.amountSold, 
                         icon: Icons.local_activity_outlined, 
-                        iconColor: Theme.of(context).colorScheme.secondary,
-                        color: Theme.of(context).colorScheme.onBackground
+                        iconColor: Theme.of(context).buttonTheme.colorScheme!.primary,
+                        color: Colors.white
                       ),
                       const SizedBox(width: 5),
                       DataResumeWidget(
                         title: 'COMISION', 
                         value: '${data.profit}€', 
                         icon: Icons.local_activity_outlined,
-                        iconColor: Theme.of(context).colorScheme.secondary,
-                        color: Theme.of(context).colorScheme.onBackground
+                        iconColor: Theme.of(context).buttonTheme.colorScheme!.primary,
+                        color: Colors.white
                       ),
                       const SizedBox(width: 5),
                       DataResumeWidget(
                         title: 'INGRESOS', 
                         value: '${data.totalIncome}€', 
                         icon: Icons.euro_outlined,
-                        iconColor: Theme.of(context).colorScheme.secondary,
-                        color: Theme.of(context).colorScheme.onBackground
+                        iconColor: Theme.of(context).buttonTheme.colorScheme!.primary,
+                        color: Colors.white
                       )
                     ],
                   )

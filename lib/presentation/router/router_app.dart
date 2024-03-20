@@ -1,11 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:my_app/presentation/screens/events/open/open_event_details_screen.dart';
-import 'package:my_app/presentation/screens/payment/payment_methods.dart';
 import 'package:my_app/presentation/screens/screens.dart';
 
 final router = GoRouter(
   //initialLocation: FirebaseAuth.instance.currentUser == null ? '/' : '/myevents',
-  initialLocation: '/signin',
+  initialLocation: '/',
   routes: [
     GoRoute(
       path: '/',
@@ -98,6 +96,11 @@ final router = GoRouter(
       path: '/payment',
       name: 'payment_methods',
       builder: (context, state) => const PaymentMethods()
+    ),
+    GoRoute(
+      path: '/admin_payment',
+      name: 'admin_payment_methods',
+      builder: (context, state) => const AdminPaymentMethods()
     ),
   ]
 );

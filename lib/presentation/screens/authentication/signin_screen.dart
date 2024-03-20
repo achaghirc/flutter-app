@@ -102,7 +102,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
           SizedBox(
                 height:  MediaQuery.of(context).size.height * 0.05,
           ),
-          const TextIconWidget(size: 55),
+          const TextIconWidget(size: 65),
         ]
       );
     }
@@ -121,7 +121,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                 height: 10,
               ),
               CircleAvatar(
-                backgroundColor: Theme.of(context).colorScheme.primary,
+                backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary,
                 child: Icon(
                   Icons.lock_open_outlined,
                   size: 20,
@@ -234,7 +234,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                         width: MediaQuery.of(context).size.width * .8,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Theme.of(context).colorScheme.secondary
+                            backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary
                           ),
                           child: (
                             isLoading ? 
@@ -250,7 +250,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                                   'Iniciar Sesión',
                                   style: GoogleFonts.nunito(
                                     fontSize: 18,
-                                    color: Theme.of(context).colorScheme.background,
+                                    color: Colors.white,
                                   ),
                               )
                           ),
@@ -319,7 +319,7 @@ class _SignInState extends ConsumerState<SignInScreen> {
                               child: Text(
                                 'Registrate!',
                                 style: GoogleFonts.nunito(
-                                  color: Theme.of(context).colorScheme.background
+                                  color: Colors.white
                                 ),  
                               ),
                               onPressed: (){

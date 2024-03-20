@@ -9,6 +9,10 @@ class CustomerDTO {
       id: json["id"]
     );
 
+    Map<String, dynamic> toJson() => {
+      "id": id
+    };
+
     CustomerDTO copyWith({
         String? id,
     }) => 

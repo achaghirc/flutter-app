@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:moment_dart/moment_dart.dart';
+import 'package:my_app/infraestructure/models/authentication/jwt_authentication_response_dto.dart';
 import 'package:my_app/infraestructure/models/events/event_dto.dart';
+import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/screens/events/admin/create_event_ubication.dart';
 import 'package:my_app/shared/form/form_layout.dart';
 import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 
-class CreateEvent extends StatefulWidget {
+class CreateEvent extends ConsumerStatefulWidget {
   const CreateEvent({super.key});
 
   @override
-  State<CreateEvent> createState() => _CreateEventState();
+  ConsumerState<CreateEvent> createState() => _CreateEventState();
 }
 
-class _CreateEventState extends State<CreateEvent> {
+class _CreateEventState extends ConsumerState<CreateEvent> {
   final _fbKey = GlobalKey<FormState>();
+  late JwtAuthenticationResponseDTO session;
   late String name;
   late String description;
   late DateTime startDate = DateTime.now();
@@ -32,6 +37,18 @@ class _CreateEventState extends State<CreateEvent> {
   final TextEditingController _initDateControlled = TextEditingController();
   final TextEditingController _endDateControlled = TextEditingController();
   final TextEditingController _limitHourController = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    if(ref.read(sessionProvider).session == null){
+      context.go('signin');
+    }
+    session = ref.read(sessionProvider).session!;
+
+  }
 
 
   void buildDateFromPickers(TextEditingController controller, String paramDate) async {
@@ -303,6 +320,7 @@ class _CreateEventState extends State<CreateEvent> {
                                   startDate: "${Moment(startDate).format("YYYY-MM-DDTHH:mm:ss")}Z", 
                                   endDate: "${Moment(endDate).format("YYYY-MM-DDTHH:mm:ss")}Z", 
                                   limitHour: "${Moment(limitHour).format("YYYY-MM-DDTHH:mm:ss")}Z",
+                                  userId: int.parse(session.user.id),
                                   organizerId: 0, 
                                   organizerName: '', 
                                   ubicationTypeRoad: '', 

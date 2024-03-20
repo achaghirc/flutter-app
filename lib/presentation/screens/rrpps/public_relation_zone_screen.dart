@@ -53,7 +53,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         scrolledUnderElevation: 0.0,
           actions: const [
             AppBarActions()
@@ -63,7 +63,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
         child: Stack(
           children: [
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.40,
+              height: MediaQuery.of(context).size.height * 0.30,
               width: MediaQuery.of(context).size.width,
               child: CustomPaint(
               painter: HeaderWavePainter(context: context),
@@ -128,9 +128,27 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              DataResumeWidget(title: 'EVENTOS', value: data.totalEvents,  icon: Icons.event_available_outlined, color: Theme.of(context).colorScheme.surface),
-                              DataResumeWidget(title: 'CARTERA', value: '${data.profit}', icon: Icons.account_balance_wallet_outlined, color: Theme.of(context).colorScheme.surface),
-                              DataResumeWidget(title: 'PUNTUACIÓN', value: '4.9/5',icon: Icons.star_border_purple500_outlined, color: Theme.of(context).colorScheme.surface)
+                              DataResumeWidget(
+                                title: 'EVENTOS', 
+                                value: data.totalEvents,  
+                                icon: Icons.event_available_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              ),
+                              DataResumeWidget(
+                                title: 'CARTERA', 
+                                value: '${data.profit}', 
+                                icon: Icons.account_balance_wallet_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              ),
+                              DataResumeWidget(
+                                title: 'PUNTUACIÓN', 
+                                value: '4.9/5',
+                                icon: Icons.star_border_purple500_outlined, 
+                                color: Colors.white, 
+                                iconColor: Theme.of(context).colorScheme.primary
+                              )
                             ],
                           ),
                         ),
@@ -139,7 +157,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                   }
                 }
               ),
-              SizedBox(height:MediaQuery.of(context).size.height * 0.09),
+              SizedBox(height:MediaQuery.of(context).size.height * 0.06),
               Container(
                 padding: const EdgeInsets.fromLTRB(11, 0, 0, 5),
                 alignment: Alignment.centerLeft,
@@ -147,7 +165,7 @@ class _PublicRelationZoneState extends ConsumerState<PublicRelationZone> {
                   'Equipos',
                   style: GoogleFonts.nunito(
                     color: Theme.of(context).colorScheme.inverseSurface,
-                    fontSize: 18,
+                    fontSize: 20,
                   ),
                   textAlign: TextAlign.start,
                   ),
@@ -383,7 +401,7 @@ class _TeamOrganizerDetails extends StatelessWidget {
         ElevatedButton(
           onPressed: (){}, 
           style: ElevatedButton.styleFrom(
-            backgroundColor: Theme.of(context).colorScheme.inversePrimary
+            backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary
           ),
           child: Text(
             'ABANDONAR',

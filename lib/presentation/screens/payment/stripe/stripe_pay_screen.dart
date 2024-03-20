@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:my_app/infraestructure/models/authentication/jwt_authentication_response_dto.dart';
+import 'package:my_app/infraestructure/models/events/event_dto.dart';
 import 'package:my_app/infraestructure/models/stripe/customer/product_dto.dart';
 import 'package:my_app/infraestructure/models/stripe/request_dto.dart';
 import 'package:my_app/infraestructure/models/stripe/stripe_response_dto.dart';
@@ -17,9 +18,11 @@ import 'package:my_app/shared/widgets/custom/gradient_text.dart';
 
 class StripePayScreen extends ConsumerStatefulWidget {
   final List<TicketsDTO> tickets;
+  final EventDTO event;
   const StripePayScreen({
     super.key,
-    required this.tickets
+    required this.tickets,
+    required this.event
   });
 
   @override
@@ -55,7 +58,7 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
   
 
   void totalAmount(){
-    _ticketComission = calculateRRPPTicketsComission();
+    _ticketComission = 0.0;
     _platformComission = calculatePlatformCommission();
     double valueTotal = _tickets.map((e) => e.price).reduce((a, b) => a+b) + _ticketComission + _platformComission;
     _totalAmount = roundDouble(valueTotal, 2);
@@ -84,8 +87,11 @@ class _StripePayScreenState extends ConsumerState<StripePayScreen> {
         unitAmountDecimal: element.price, currency: 'EUR');
         products.add(p);
       }
+      
       RequestDTO requestDTO = RequestDTO(customerEmail: session.user.personEmail, 
-      customerUsername: session.user.username, items: products, ticketsAmount: _ticketsAmount, platformCommission: _platformComission, rrppCommission: _ticketComission);
+      customerUsername: session.user.username, 
+      adminUser: widget.event.userId,
+      items: products, ticketsAmount: _ticketsAmount, platformCommission: _platformComission, rrppCommission: _ticketComission);
 
       ResponseStripePayment jsonResponse = await StripeRepositoryImpl(session).createPaymentIntent(requestDTO);
       paymentIntentId = jsonResponse.paymentIntentId;

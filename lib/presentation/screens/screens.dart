@@ -1,4 +1,3 @@
-
 export 'package:my_app/presentation/screens/authentication/signin_screen.dart';
 export 'package:my_app/presentation/screens/authentication/signup_screen.dart';
 export 'package:my_app/presentation/screens/basic/entry_screen.dart';
@@ -9,6 +8,8 @@ export 'package:my_app/presentation/screens/events/admin/edit_event_ubication.da
 export 'package:my_app/presentation/screens/events/rrpp/events_rrpp_screen.dart';
 export 'package:my_app/presentation/screens/events/events_screen.dart';
 export 'package:my_app/presentation/screens/events/events_screen_user.dart';
+export 'package:my_app/presentation/screens/payment/payment_methods.dart';
+export 'package:my_app/presentation/screens/payment/admin_payment_methods.dart';
 export 'package:my_app/presentation/screens/tickets/tickets_user_screen.dart';
 export 'package:my_app/presentation/screens/rrpps/public_relation_details_screen.dart';
 export 'package:my_app/presentation/screens/rrpps/public_relation_zone_screen.dart';
@@ -17,4 +18,4 @@ export 'package:my_app/presentation/screens/rrpps/squad_management_screen.dart';
 export 'package:my_app/presentation/screens/user/change_password_screen.dart';
 export 'package:my_app/presentation/screens/user/user_personal_data_screen.dart';
 export 'package:my_app/presentation/screens/user/user_profile_screen.dart';
-
+export 'package:my_app/presentation/screens/events/open/open_event_details_screen.dart';

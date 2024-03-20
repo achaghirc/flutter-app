@@ -154,7 +154,11 @@ class _UserProfileScreenState extends ConsumerState<UserProfileScreen> {
           ),
           ListTile(
             onTap: (){
-              context.pushNamed('payment_methods');
+              if(session.user.roleCode == 'ADMIN'){
+                context.pushNamed('admin_payment_methods');
+              }else {
+                context.pushNamed('payment_methods');
+              }
             },
             title: Text(
               'Formas de Pago',

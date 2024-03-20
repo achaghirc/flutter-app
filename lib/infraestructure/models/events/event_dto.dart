@@ -18,6 +18,7 @@ class EventDTO {
     String startDate;
     String endDate;
     String limitHour;
+    int userId;
     int organizerId;
     String organizerName;
     String? ubicationId;
@@ -40,6 +41,7 @@ class EventDTO {
         required this.description,
         required this.startDate,
         required this.limitHour,
+        required this.userId,
         required this.endDate,
         required this.organizerId,
         required this.organizerName,
@@ -65,6 +67,7 @@ class EventDTO {
       startDate: jsonMap["startDate"],
       endDate: jsonMap["endDate"],
       limitHour: jsonMap["limitHour"] ?? jsonMap["startDate"],
+      userId: jsonMap["userId"] ?? 0,
       organizerId: jsonMap["organizerId"],
       organizerName: jsonMap["organizerName"],
       ubicationId: jsonMap["ubicationId"] ?? '0',

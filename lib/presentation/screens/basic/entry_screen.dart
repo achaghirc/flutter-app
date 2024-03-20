@@ -1,6 +1,9 @@
+import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -9,7 +12,9 @@ import 'package:my_app/infraestructure/models/authentication/jwt_authentication_
 import 'package:my_app/presentation/providers/auth_provider.dart';
 import 'package:my_app/presentation/screens/authentication/signin_screen.dart';
 import 'package:my_app/shared/widgets/custom/text_icon_widget.dart';
+import 'package:uni_links/uni_links.dart';
 
+bool _initialUriIsHandled = false;
 class EntryScreen extends ConsumerStatefulWidget {
   const EntryScreen({super.key});
 
@@ -19,6 +24,9 @@ class EntryScreen extends ConsumerStatefulWidget {
 
 class _EntryScreenState extends ConsumerState<EntryScreen> {
   FlutterSecureStorage secureStorage = const FlutterSecureStorage();
+  //DEEP LINKING
+  Object? _err;
+  StreamSubscription? _sub;
 
   Future<JwtAuthenticationResponseDTO?> getSessionUser(String key) async{
     String? strSession = await secureStorage.read(key: key);
@@ -30,9 +38,69 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
     }
   }
 
+  /// Handle incoming links - the ones that the app will recieve from the OS
+  /// while already started.
+  void _handleIncomingLinks() {
+    if (!kIsWeb) {
+      // It will handle app links while the app is already started - be it in
+      // the foreground or in the background.
+      _sub = uriLinkStream.listen((Uri? uri) {
+        if (!mounted) return;
+        print('got uri: $uri');
+        context.pushNamed(uri!.path);
+      }, onError: (Object err) {
+        if (!mounted) return;
+        print('got err: $err');
+        setState(() {
+          if (err is FormatException) {
+            _err = err;
+          } else {
+            _err = null;
+          }
+        });
+      });
+    }
+  }
+ ///outnow://achaghirc.github.io/signin
+  /// Handle the initial Uri - the one the app was started with
+  ///
+  /// **ATTENTION**: `getInitialLink`/`getInitialUri` should be handled
+  /// ONLY ONCE in your app's lifetime, since it is not meant to change
+  /// throughout your app's life.
+  ///
+  /// We handle all exceptions, since it is called from initState.
+  Future<void> _handleInitialUri() async {
+    // In this example app this is an almost useless guard, but it is here to
+    // show we are not going to call getInitialUri multiple times, even if this
+    // was a weidget that will be disposed of (ex. a navigation route change).
+    if (!_initialUriIsHandled) {
+      _initialUriIsHandled = true;
+      print('_handleInitialUri called');
+      try {
+        final uri = await getInitialUri();
+        if (uri == null) {
+          print('no initial uri');
+        } else {
+          print('got initial uri: $uri');
+        }
+        if (!mounted) return;
+      } on PlatformException {
+        // Platform messages may fail but we ignore the exception
+        print('falied to get initial uri');
+      } on FormatException catch (err) {
+        if (!mounted) return;
+        print('malformed initial uri');
+        setState(() => _err = err);
+      }
+    }
+  }
+
+
   @override
   void initState() {
     super.initState();
+    _handleIncomingLinks();
+    _handleInitialUri();
     getSessionUser("session").then((session) => {
       if(session != null){
         ref.read(sessionProvider.notifier).set(session),
@@ -44,6 +112,12 @@ class _EntryScreenState extends ConsumerState<EntryScreen> {
       }
     });
   }
+  @override
+  void dispose() {
+    _sub?.cancel();
+    super.dispose();
+  }
+
 
 
   @override

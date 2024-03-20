@@ -233,11 +233,11 @@ class _SquadEventAssignedStateScreen extends ConsumerState<SquadEventAssignedScr
             ],
           ),
           Positioned(
-            bottom: MediaQuery.of(context).size.height * 0.03,
-            right: MediaQuery.of(context).size.width * 0.03,
+            bottom: MediaQuery.of(context).size.height * 0.05,
+            right: MediaQuery.of(context).size.width * 0.05,
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.inversePrimary
+                backgroundColor: Theme.of(context).buttonTheme.colorScheme!.primary
               ),
               onPressed: (){
                 final eventPublicRelationsProvider = ref.read(eventPublicRleationsRepositoryProvider);

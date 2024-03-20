@@ -14,7 +14,7 @@ final ColorScheme schemeLight = SeedColorScheme.fromSeeds(
     secondaryKey: secondarySeedColor,
     tertiaryKey: tertiarySeedColor,
     tones: FlexTones.vivid(Brightness.light),
-    surfaceTint: primarySeedColor
+    surfaceTint: primarySeedColor,
 );
 
 
@@ -43,6 +43,20 @@ class AppTheme {
   ThemeData getTheme() => ThemeData(
     useMaterial3: true,
     colorScheme: isDarkMode ? schemeDark : schemeLight,
+    buttonTheme: ButtonThemeData(
+      colorScheme: ColorScheme(
+        brightness: isDarkMode ? Brightness.dark : Brightness.light, 
+        primary: const Color.fromARGB(255, 57, 50, 247), 
+        onPrimary: const Color.fromARGB(255, 211, 212, 213), 
+        secondary: const Color.fromARGB(255, 57, 50, 247), 
+        onSecondary: const Color.fromARGB(255, 30, 23, 232), 
+        error: const Color.fromARGB(255, 188, 18, 18), 
+        onError: const Color.fromARGB(255, 92, 17, 17), 
+        background: const Color.fromARGB(255, 30, 23, 232), 
+        onBackground: const Color.fromARGB(255, 30, 23, 232), 
+        surface: const Color.fromARGB(255, 30, 23, 232), 
+        onSurface: const Color.fromARGB(255, 30, 23, 232)),
+    ),
     appBarTheme: const AppBarTheme(
       scrolledUnderElevation: 0.0,
       centerTitle: false,

@@ -150,7 +150,7 @@ class _TicketEventBuyWidgetState extends State<TicketEventBuyWidget> {
               if(counter > 0){
                 buyTicketProcess().then((value) {                
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return StripePayScreen(tickets: value);
+                    return StripePayScreen(tickets: value, event: widget.event);
                   }));
                 }).catchError((onError) {
                   CustomSnackBarWidget.openSnackBar(context, 'Error', onError.toString());

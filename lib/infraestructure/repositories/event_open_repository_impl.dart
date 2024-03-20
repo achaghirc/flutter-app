@@ -3,7 +3,6 @@ import 'package:my_app/domain/repositories/event_open_respository.dart';
 import 'package:my_app/globals.dart' as globals;
 import 'package:http/http.dart';
 import 'package:my_app/infraestructure/models/events/custom/open_event_dto.dart';
-import 'package:my_app/infraestructure/models/events/event_dto.dart';
 import 'package:my_app/shared/services/basic_service.dart';
 
 final baseURL = globals.url();

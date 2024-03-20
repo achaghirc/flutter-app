@@ -271,75 +271,52 @@ class _EventSelectRelationPublicState extends State<_EventSelectRelationPublic> 
           :
           MediaQuery.of(context).size.height * 0.07,
         ),
-        Text(
-          'Selecciona tu RRPP',
-          style: GoogleFonts.nunito(
-            fontSize: 25,
-            fontWeight: FontWeight.bold
-          ),
-        ),
-        Container(
-          width: MediaQuery.of(context).size.width * 0.5,
-          height: MediaQuery.of(context).size.height * 0.10,
-          padding: const EdgeInsets.fromLTRB(20,15,20,15),
-          child: TextFormField(
-            controller: _ticketCodeController,
-            onChanged: (val) {
-              if(val.length == 8){
-                setState(() {});
-              }
+        Padding(
+          padding: const EdgeInsets.fromLTRB(10.0, 0, 10.0, 0),
+          child: InkWell(
+            onTap: () {
+              context.pushNamed("event_details", pathParameters: {'id': _eventId.toString(), 'publicRelationCode': 'ADMIN', 'assigned': 'N'});
             },
-            validator: (val) {
-              if(val == "") {
-                return 'Campo obligatorio';
-              }
-              return null;
-            },
-            decoration: InputDecoration(
-              focusColor: Theme.of(context).colorScheme.secondary,
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: const BorderRadius.all(Radius.circular(20.0)),
-                  borderSide: BorderSide(
-                    color: Theme.of(context).colorScheme.secondary,
-                )
+            borderRadius: BorderRadius.circular(20.0),
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(colors: [
+                  Color.fromRGBO(86,204,255, 100),
+                  Color.fromRGBO(113,228,201, 100),
+                  Color.fromRGBO(143,255,140, 100),
+                ]),
+                borderRadius: BorderRadius.circular(20.0),
+                color: Theme.of(context).buttonTheme.colorScheme!.primary
               ),
-              border: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20.0))
-              ),
-              suffixIcon: FadeIn(
-                duration: const Duration(milliseconds: 200),
-                animate: _ticketCodeController.text != "",
-                child: IconButton(
-                  icon: Icon(
-                      Icons.close_outlined,
-                    color: Theme.of(context).colorScheme.secondary,  
+              child: ListTile(
+                title: Text(
+                  'Continuar sin RRPP',
+                  style: GoogleFonts.nunito(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w700,
                   ),
-                  onPressed: () {
-                    _ticketCodeController.text = "";
-                    setState(() {});
-                  },
                 ),
+                trailing: const Icon(Icons.arrow_forward_outlined),
               ),
-              labelText: 'Código',
-              labelStyle: GoogleFonts.nunito(
-                color: Theme.of(context).colorScheme.secondary
-              )
             ),
           ),
         ),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.01,
+          height: MediaQuery.of(context).size.height * 0.025,
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(20.0, 0, 20.0, 0),
           child: Text(
-            'En caso de no disponer de código de RRPP, selecciona uno de los siguientes o busca tu RRPP de confianza.',
+            'En caso de que querer realizar la compra a través de RRPP, aquí te dejamos a los mejores RRPPs o puedes buscar a tu RRPP de confianza.',
             maxLines: 2,
             style: GoogleFonts.nunito(
               fontSize: 12,
               fontWeight: FontWeight.w500
             ),
           ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.01,
         ),
         Padding(
           padding: const EdgeInsets.fromLTRB(10.0, 20.0, 10.0, 0),

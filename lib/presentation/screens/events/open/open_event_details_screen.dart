@@ -191,7 +191,7 @@ class _ManageLoginOpenEvent extends StatelessWidget {
             textDirection: TextDirection.rtl,
             child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                backgroundColor: Theme.of(context).colorScheme.secondary
+                backgroundColor: Theme.of(context).colorScheme.primary
               ),
               onPressed: (){
                 BottomSheetWidget.showModalBottomSheet(
@@ -216,6 +216,46 @@ class _ManageLoginOpenEvent extends StatelessWidget {
               ),
               icon: Icon(
                 Icons.arrow_back_outlined,
+                color: Theme.of(context).colorScheme.onBackground,
+              )
+            ),
+          ),
+        ),
+        SizedBox(
+          height: MediaQuery.of(context).size.height * 0.025,
+        ),
+        Container(
+          height: 50,
+          padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: Directionality(
+            textDirection: TextDirection.rtl,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.primary
+              ),
+              onPressed: (){
+                BottomSheetWidget.showModalBottomSheet(
+                  context,
+                  SignInScreen(showFooter: false, pathTo: '/event/${event.id}/$publicRelationCode/N',),
+                  MediaQuery.of(context).size.height * 0.8,
+                  MediaQuery.of(context).size.height * 0.8,
+                  MediaQuery.of(context).size.width,
+                  BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    color: Theme.of(context).colorScheme.surface
+                  ),
+                );
+              },
+              label: Text(
+                'Contuniar con Google',
+                style: GoogleFonts.nunito(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white,
+                ),
+              ),
+              icon: Icon(
+                Icons.g_mobiledata_outlined,
                 color: Theme.of(context).colorScheme.onBackground,
               )
             ),

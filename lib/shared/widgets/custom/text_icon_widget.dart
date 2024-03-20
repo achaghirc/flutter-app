@@ -18,7 +18,8 @@ class TextIconWidget extends StatelessWidget {
           'Out',
           style: GoogleFonts.nunito(
             fontSize: size ?? 55,
-            fontWeight: FontWeight.w800
+            fontWeight: FontWeight.w800,
+            color: Colors.white
           ),
         ),
         GradientText(

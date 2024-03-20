@@ -55,7 +55,7 @@ class _RelationPublicDetailsScreenState extends ConsumerState<PublicRelationDeta
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.secondary,
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         scrolledUnderElevation: 0.0,
         title: Text(
           'Ventas',
@@ -147,9 +147,27 @@ class _RelationPublicDetailsScreenState extends ConsumerState<PublicRelationDeta
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                DataResumeWidget(title: 'VENDIDAS', value: infoUser.amountSold, icon: Icons.local_activity_outlined, color: Colors.white),
-                                DataResumeWidget(title: 'COMISION', value: '${infoUser.profit}€', icon: Icons.local_activity_outlined, color: Colors.white),
-                                DataResumeWidget(title: 'INGRESOS', value: '${infoUser.totalIncome}€', icon: Icons.euro_outlined, color: Colors.white)
+                                DataResumeWidget(
+                                  title: 'VENDIDAS', 
+                                  value: infoUser.amountSold, 
+                                  icon: Icons.local_activity_outlined, 
+                                  color: Colors.white, 
+                                  iconColor: Theme.of(context).colorScheme.primary
+                                ),
+                                DataResumeWidget(
+                                  title: 'COMISION',
+                                  value: '${infoUser.profit}€', 
+                                  icon: Icons.local_activity_outlined, 
+                                  color: Colors.white, 
+                                  iconColor: Theme.of(context).colorScheme.primary
+                                ),
+                                DataResumeWidget(
+                                  title: 'INGRESOS', 
+                                  value: '${infoUser.totalIncome}€', 
+                                  icon: Icons.euro_outlined, 
+                                  color: Colors.white, 
+                                  iconColor: Theme.of(context).colorScheme.primary
+                                )
                               ],
                             ),
                           ),

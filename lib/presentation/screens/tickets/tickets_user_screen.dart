@@ -9,11 +9,9 @@ import 'package:my_app/infraestructure/models/tickets/tickets_dto.dart';
 import 'package:my_app/infraestructure/repositories/queryFilters/tickets_query_params.dart';
 import 'package:my_app/infraestructure/repositories/tickets_repository_impl.dart';
 import 'package:my_app/presentation/providers/auth_provider.dart';
-import 'package:my_app/shared/widgets/bottomSheet/bottom_sheet_widget.dart';
 import 'package:my_app/shared/widgets/cards/tickets/ticket_card_widget.dart';
 import 'package:my_app/shared/widgets/navigation/app_bar_actions.dart';
 import 'package:my_app/shared/widgets/navigation/bottom_navigation_widget.dart';
-import 'package:my_app/shared/widgets/shimmed/shimmed_tickets.dart';
 
 class TicketsUserScreen extends ConsumerStatefulWidget {
   const TicketsUserScreen({super.key});

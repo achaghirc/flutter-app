@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:my_app/infraestructure/models/authentication/jwt_authentication_response_dto.dart';
 import 'package:my_app/infraestructure/models/stripe/payment/payment_method_collection.dart';
